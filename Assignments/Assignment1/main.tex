@@ -1,0 +1,140 @@
+\documentclass{article}
+
+
+\usepackage{amsmath,amssymb,amsthm,amsfonts,amscd}
+\usepackage{multirow}
+\usepackage{animate}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage[tmargin=1in, bmargin=1in, lmargin=0.75in, rmargin=0.75in]{geometry}
+\usepackage[colorlinks]{hyperref}
+\usepackage{mathtools}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{doi}
+\usepackage{framed}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{esvect}
+\usepackage{commath}
+\usepackage{lastpage}
+\usepackage{mathpazo}
+% \usepackage{tgpagella}
+\usepackage{anyfontsize}
+\usepackage{tkz-graph}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage[capitalize, nameinlink]{cleveref}
+\newcommand\mycommfont[1]{\footnotesize\ttfamily{#1}}
+\SetCommentSty{mycommfont}
+\SetArgSty{textup}
+\usepackage[square,numbers]{natbib}
+\usepackage{verbatim}
+\usepackage{titlesec}
+\titleformat{\section}[block]{\sffamily\Large\filcenter\bfseries}{\S\thesection.}{0.25cm}{\Large}
+\titleformat{\subsection}[block]{\large\bfseries\sffamily}{\thesubsection.}{0.2cm}{\large}
+\titleformat{\subsubsection}[block]{\large\bfseries\sffamily}{\normalsize\thesubsubsection.}{0.15cm}{\normalsize}
+\usepackage{listings} % For code listings
+
+\colorlet{shadecolor}{black}
+\lstnewenvironment{code}{%
+\footnotesize
+    \shaded
+    \lstset{
+        basicstyle=\ttfamily\color{white},
+        backgroundcolor=\color{shadecolor},
+        frame=single, % Add a frame around the code
+        framerule=0pt, % No rule width for the frame
+        framesep=4pt, % Adjust the spacing between frame and content
+    }%
+}{%
+    \endshaded
+}
+
+\usepackage{fancyhdr}
+% \renewcommand\thesubsection{\thesection.\alph{subsection}}
+
+\Crefname{algocf}{Algorithm}{Algorithms}
+
+
+\newcommand{\hr}[1]{\rule{\linewidth}{#1}}
+
+
+
+\title{COL334 Assignment1}
+\author{Ankit Mondal and Anish Banerjee}
+\begin{document}
+\maketitle
+
+\section{Network Analysis}
+\begin{enumerate}[a.]
+    \item We ran {\tt tracert} on {\tt iitd.ac.in} outside IITD network and got the following output:
+    \begin{code}
+PS C:\Users\Anish> tracert iitd.ac.in
+
+Tracing route to iitd.ac.in [103.27.9.24]
+over a maximum of 30 hops:
+
+ 1    4 ms    3 ms    9 ms dsldevice.lan [192.168.1.1]
+ 2   87 ms   73 ms   26 ms abts-north-dynamic-255.187.69.182.airtelbroadband.in [182.69.187.255]
+ 3   34 ms   28 ms   48 ms 125.18.240.153
+ 4   38 ms   45 ms   38 ms 116.119.106.136
+ 5   47 ms   53 ms   49 ms 49.44.220.188
+ 6    *       *       *    Request timed out.
+ 7    *       *       *    Request timed out.
+ 8   47 ms   43 ms   47 ms 136.232.148.178
+ 9    *       *       *    Request timed out.
+10    *       *       *    Request timed out.
+11    *       *       *    Request timed out.
+12   45 ms   59 ms   52 ms 103.27.9.24
+13  187 ms   46 ms   61 ms 103.27.9.24
+14   47 ms   48 ms   49 ms 103.27.9.24
+
+Trace complete.
+    \end{code}
+    \item TODO
+    \item We observe that the maximum packet size that can be sent is 68 (to {\tt google.com})
+\begin{code}
+root@IdeapadAB:/mnt/c/Users/Anish# ping -s 68 -c 5 google.com
+PING google.com (142.250.194.238) 68(96) bytes of data.
+76 bytes from del12s08-in-f14.1e100.net (142.250.194.238): icmp_seq=1 ttl=116 time=7.00 ms
+76 bytes from del12s08-in-f14.1e100.net (142.250.194.238): icmp_seq=2 ttl=116 time=6.73 ms
+76 bytes from del12s08-in-f14.1e100.net (142.250.194.238): icmp_seq=3 ttl=116 time=7.11 ms
+76 bytes from del12s08-in-f14.1e100.net (142.250.194.238): icmp_seq=4 ttl=116 time=6.05 ms
+76 bytes from del12s08-in-f14.1e100.net (142.250.194.238): icmp_seq=5 ttl=116 time=7.98 ms
+
+--- google.com ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4007ms
+rtt min/avg/max/mdev = 6.052/6.973/7.975/0.621 ms
+root@IdeapadAB:/mnt/c/Users/Anish# ping -s 69 -c 5 google.com
+PING google.com (142.250.194.238) 69(97) bytes of data.
+
+--- google.com ping statistics ---
+5 packets transmitted, 0 received, 100% packet loss, time 4009ms  
+\end{code}
+However, we also observe that the max ping size depends on the site requested for. For example, we saw that for {\tt iitd.ac.in}, it is 1472 bytes.
+We can run the following python code to find the maximum packet size for a given site:
+\begin{code}
+    #!/usr/bin/python3
+
+    import os
+    site=input("Enter the site: ")
+    l=1
+    r=65007
+    while l<r:
+        mid=(l+r)//2
+        if os.system("ping -c 1 -s "+str(mid)+" "+site)==0:
+            l=mid+1
+        else:
+            r=mid
+    print("\n\nMax ping size is: "+str(l-1))
+\end{code}
+\end{enumerate}
+
+
+\section{{\tt tracert} using python}
+\section{Internet Architecture}
+\section{Packet Analysis}
+
+\clearpage
+\input{appendix}
+\end{document}
