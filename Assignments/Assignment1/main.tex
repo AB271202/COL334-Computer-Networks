@@ -130,7 +130,6 @@ We can run the following python code to find the maximum packet size for a given
 \end{code}
 \end{enumerate}
 
-
 \section{{\tt traceroute} using python}
 The code for {\tt traceroute} can be found in {\tt traceroute.py}. 
 
@@ -278,8 +277,19 @@ traceroute to facebook.com (157.240.16.35), 64 hops max, 52 byte packets
 \end{code}
 \end{enumerate}
 
+\clearpage
 \section{Packet Analysis}
-
+\begin{enumerate}[a.]
+    \item We ran a DNS filter on the output to {\tt iitd.ac.in} and got the following result(\cref{fig:IITDDNS}):
+    \begin{figure}[!ht]
+        \centering
+        \includegraphics[scale=0.5]{images/IITD dns.png}
+        \caption{IITD DNS}
+        \label{fig:IITDDNS}
+    \end{figure}
+    \subsubsection*{Observations}
+    As shown in the figure \cref{fig:IITDDNS}, we observe  there were DNS queries and responses for {\tt iitd.ac.in}. It began
+\end{enumerate}
 \clearpage
 \input{appendix}
 \end{document}
