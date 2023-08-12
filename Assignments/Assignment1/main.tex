@@ -141,7 +141,7 @@ First we run a traceroute from our own IP address to the 5 different servers.
 
 \item Here is the route to {\tt www.google.com}
 \begin{code}
-Ankits-MacBook-Air-6:~ ankitmondal$ traceroute google.com
+Ankits-MacBook-Air-6:~ ankitmondal traceroute google.com
 traceroute to google.com (142.250.194.238), 64 hops max, 52 byte packets
  1  10.184.0.13 (10.184.0.13)  3.999 ms  3.570 ms  3.506 ms
  2  10.254.175.1 (10.254.175.1)  4.146 ms
@@ -159,7 +159,7 @@ traceroute to google.com (142.250.194.238), 64 hops max, 52 byte packets
 
 \item Here is the route to {\tt www.iitd.ac.in}
 \begin{code}
-Ankits-MacBook-Air-6:~ ankitmondal$ traceroute www.iitd.ac.in
+Ankits-MacBook-Air-6:~ ankitmondal traceroute www.iitd.ac.in
 traceroute to www.iitd.ac.in (10.10.211.212), 64 hops max, 52 byte packets
  1  10.184.0.13 (10.184.0.13)  4.675 ms  4.242 ms  3.512 ms
  2  10.254.175.5 (10.254.175.5)  4.012 ms
@@ -172,7 +172,7 @@ traceroute to www.iitd.ac.in (10.10.211.212), 64 hops max, 52 byte packets
  \item Here is the route to {\tt www.utah.edu}
  
 \begin{code}
-Ankits-MacBook-Air-6:~ ankitmondal$ traceroute www.utah.edu
+Ankits-MacBook-Air-6:~ ankitmondal traceroute www.utah.edu
 traceroute to www.utah.edu (155.98.186.21), 64 hops max, 52 byte packets
  1  10.184.0.13 (10.184.0.13)  5.480 ms  3.898 ms  3.338 ms
  2  10.254.175.1 (10.254.175.1)  3.602 ms
@@ -251,7 +251,7 @@ traceroute to www.utah.edu (155.98.186.21), 64 hops max, 52 byte packets
 
 \item Here is the route to {\tt www.facebook.com}
 \begin{code}
-Ankits-MacBook-Air-6:~ ankitmondal$ traceroute facebook.com
+Ankits-MacBook-Air-6:~ ankitmondal traceroute facebook.com
 traceroute to facebook.com (157.240.16.35), 64 hops max, 52 byte packets
  1  10.184.0.13 (10.184.0.13)  4.151 ms  3.441 ms  3.988 ms
  2  10.254.175.5 (10.254.175.5)  3.479 ms
@@ -290,6 +290,8 @@ traceroute to www.utah.edu (155.98.186.21), 30 hops max, 60 byte packets
  6  be2432.ccr21.mci01.atlas.cogentco.com (154.54.3.134)  183.750 ms  183.779 ms
  7  be3036.ccr22.den01.atlas.cogentco.com (154.54.31.89)  195.119 ms be3035.ccr21.den01.atlas.cogentco.com (154.54.5.89)  195.010 ms
  8  be3038.ccr32.slc01.atlas.cogentco.com (154.54.42.97)  205.222 ms be3037.ccr21.slc01.atlas.cogentco.com (154.54.41.145)  205.428 ms
+ \end{code}
+ \begin{code}
  9  be2685.rcr01.b020767-1.slc01.atlas.cogentco.com (154.54.41.118)  206.426 ms be2686.rcr01.b020767-1.slc01.atlas.cogentco.com (154.54.46.134)  206.182 ms
 10  38.142.233.58 (38.142.233.58)  206.340 ms  206.447 ms
 11  lv3-beibr-a-184-int.uen.net (140.197.249.117)  206.151 ms  206.117 ms
@@ -346,6 +348,8 @@ traceroute to iitd.ac.in (103.27.9.24), 30 hops max, 40 byte packets
  3  ae30-75.edge2.BuenosAires1.Level3.net (67.73.142.21)  0.790 ms  0.896 ms  0.803 ms
  4  * * *
  5  4.7.26.62 (4.7.26.62)  245.013 ms  245.016 ms  245.030 ms
+ \end{code}
+ \begin{code}
  6  49.45.4.87 (49.45.4.87)  358.610 ms  358.603 ms  358.587 ms
  7  49.45.4.102 (49.45.4.102)  348.422 ms  348.424 ms  348.416 ms
  8  49.44.220.8 (49.44.220.8)  352.905 ms  352.905 ms  352.896 ms
@@ -362,35 +366,38 @@ traceroute to iitd.ac.in (103.27.9.24), 30 hops max, 40 byte packets
 \end{code}
 \item Here is the route to {\tt www.google.com}
 \begin{code}
- traceroute to google.com (216.58.202.110), 30 hops max, 40 byte packets
- 1  host1.75.78.170.h2dns.net (170.78.75.1)  1.207 ms *  1.224 ms
- 2  Internal (Internal)  0.548 ms  0.541 ms  0.509 ms
- 3  200.16.206.3 (200.16.206.3)  1.628 ms  1.525 ms  1.530 ms
- 4  200.32.34.185 (200.32.34.185)  1.842 ms  1.707 ms  1.508 ms
- 5  200.32.33.174 (200.32.33.174)  1.357 ms  1.554 ms  1.430 ms
- 6  200-26-92-114.advance.com.ar (200.26.92.114)  1.298 ms  2.608 ms  2.605 ms
- 7  72.14.220.19 (72.14.220.19)  6.745 ms  5.560 ms  5.501 ms
- 8  72.14.220.18 (72.14.220.18)  2.203 ms  2.138 ms  2.148 ms
- 9  142.250.57.193 (142.250.57.193)  2.121 ms  2.214 ms  2.268 ms
-10  142.251.79.143 (142.251.79.143)  2.867 ms  2.876 ms  2.890 ms
-11  eze06s10-in-f14.1e100.net (216.58.202.110)  1.899 ms  1.989 ms  2.157 ms
+ traceroute to google.com (142.250.179.174), 30 hops max, 60 byte packets
+ 1  * *
+ 2  be2982.ccr41.mia03.atlas.cogentco.com (154.54.40.57)  142.408 ms  142.458 ms
+ 3  tata.mia03.atlas.cogentco.com (154.54.9.46)  141.594 ms  141.593 ms
+ 4  74.125.146.6 (74.125.146.6)  144.225 ms  141.647 ms
+ 5  108.170.253.18 (108.170.253.18)  142.634 ms 108.170.249.30 (108.170.249.30)  142.640 ms
+ 6  142.250.211.238 (142.250.211.238)  143.012 ms  142.981 ms
+ 7  142.250.61.154 (142.250.61.154)  184.630 ms 142.250.225.22 (142.250.225.22)  225.047 ms
+ 8  216.239.58.153 (216.239.58.153)  183.116 ms 142.250.213.67 (142.250.213.67)  169.519 ms
+ 9  142.250.59.185 (142.250.59.185)  274.210 ms  274.211 ms
+10  142.251.232.218 (142.251.232.218)  254.561 ms  253.827 ms
+11  142.251.237.170 (142.251.237.170)  253.324 ms 142.251.236.84 (142.251.236.84)  253.641 ms
+12  108.170.241.161 (108.170.241.161)  254.483 ms  253.977 ms
+13  142.251.48.177 (142.251.48.177)  252.860 ms 142.251.48.175 (142.251.48.175)  253.098 ms
+14  ams15s41-in-f14.1e100.net (142.250.179.174)  252.669 ms  253.135 ms
 \end{code}
 
 \item Here is the route to {\tt www.facebook.com}
 \begin{code}
-traceroute to www.facebook.com (157.240.12.35), 30 hops max, 60 byte packets
+traceroute to facebook.com (157.240.12.35), 30 hops max, 60 byte packets
  1  * *
- 2  be2982.ccr41.mia03.atlas.cogentco.com (154.54.40.57)  142.001 ms  142.015 ms
- 3  38.104.95.122 (38.104.95.122)  162.438 ms  166.992 ms
- 4  po204.asw01.mia1.tfbnw.net (129.134.64.164)  141.721 ms po204.asw04.mia1.tfbnw.net (129.134.64.170)  141.751 ms
- 5  ae103.ar04.mia1.tfbnw.net (129.134.64.128)  142.080 ms ae101.ar01.mia1.tfbnw.net (129.134.64.100)  142.139 ms
+ 2  be2982.ccr41.mia03.atlas.cogentco.com (154.54.40.57)  142.038 ms  142.097 ms
+ 3  38.104.95.114 (38.104.95.114)  141.847 ms 38.104.95.122 (38.104.95.122)  142.233 ms
+ 4  po203.asw03.mia1.tfbnw.net (129.134.64.160)  141.616 ms po203.asw01.mia1.tfbnw.net (129.134.64.156)  141.634 ms
+ 5  ae104.ar01.mia1.tfbnw.net (129.134.64.106)  142.226 ms ae104.ar03.mia1.tfbnw.net (129.134.64.122)  142.011 ms
  6  * *
  7  * *
- 8  * ae2.ar01.gru2.tfbnw.net (129.134.50.215)  246.723 ms
- 9  * ae1.ar02.gru1.tfbnw.net (204.15.22.51)  259.994 ms
-10  po285.psw03.gru2.tfbnw.net (147.75.214.177)  245.858 ms po236.psw04.gru2.tfbnw.net (129.134.33.143)  246.164 ms
-11  157.240.39.21 (157.240.39.21)  245.816 ms po216.psw04.gru2.tfbnw.net (129.134.33.91)  246.168 ms
-12  edge-star-mini-shv-02-gru2.facebook.com (157.240.12.35)  245.545 ms 157.240.39.123 (157.240.39.123)  245.936 ms
+ 8  ae26.bb01.gru1.tfbnw.net (129.134.34.98)  246.405 ms ae2.ar01.gru2.tfbnw.net (129.134.50.215)  246.669 ms
+ 9  ae1.ar01.gru1.tfbnw.net (204.15.20.145)  245.920 ms po221.asw02.gru2.tfbnw.net (31.13.31.201)  245.623 ms
+10  po221.asw02.gru1.tfbnw.net (157.240.53.11)  245.596 ms po282.psw03.gru2.tfbnw.net (147.75.214.173)  245.865 ms
+11  157.240.39.47 (157.240.39.47)  245.564 ms 157.240.36.75 (157.240.36.75)  246.065 ms
+12  157.240.39.199 (157.240.39.199)  246.075 ms edge-star-mini-shv-02-gru2.facebook.com (157.240.12.35)  245.745 ms
 \end{code}
 \end{enumerate}
 
@@ -453,6 +460,8 @@ traceroute to www.uct.ac.za (137.158.159.192), 30 hops max, 60 byte packets
 23  * *
 24  * *
 25  * *
+\end{code}
+\begin{code}
 26  * *
 27  * *
 28  * *
@@ -505,6 +514,8 @@ traceroute to www.facebook.com (157.240.221.35), 30 hops max, 60 byte packets
  1  gi0-0-0-17.20.agr11.jnb01.atlas.cogentco.com (206.185.255.1)  0.848 ms  0.833 ms
  2  be2355.ccr51.jnb01.atlas.cogentco.com (154.54.43.37)  1.043 ms  1.147 ms
  3  be2389.ccr22.lon01.atlas.cogentco.com (154.54.80.201)  194.069 ms  193.812 ms
+ \end{code}
+ \begin{code}
  4  be2185.rcr21.b015534-1.lon01.atlas.cogentco.com (154.54.61.61)  195.434 ms  193.532 ms
  5  149.14.251.186 (149.14.251.186)  193.681 ms  193.576 ms
  6  po151.asw01.lhr6.tfbnw.net (129.134.44.196)  193.883 ms po151.asw02.lhr6.tfbnw.net (129.134.44.200)  197.696 ms
@@ -521,9 +532,9 @@ traceroute to www.facebook.com (157.240.221.35), 30 hops max, 60 byte packets
     \begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
     \hline
         ~ & google.com & Facebook.com & Utah.edu & iitd.ac.in & uct.ac.za  \\ \hline
-        Laptop & 9 & 11 & 34 & 4 & - \\ \hline
-        Buenos Aires & 11 & 9 & 19 & 11 & - \\ \hline
-        Johannesburg & 11 & 9 & 23 & 14 & -  \\ \hline
+        Laptop & 10 & 12 & 34 & 4 & - \\ \hline
+        Buenos Aires & 14 & 12 & 21 & 18 & - \\ \hline
+        Johannesburg & 11 & 9 & 24 & 21 & -  \\ \hline
     \end{tabular}
 \end{table}
 
@@ -532,7 +543,7 @@ A detailed analysis:-
 \begin{enumerate} [1.]
 \item Geographical distance vs number of Hops.\\
 Let's use utah.edu as the sample to study the trend.
-The distance between utah and the 3 traceruote sources vary as follows, Utah-Buenos Aires < Utah-Delhi < Utah-Johannesburg. 
+The distance between utah and the 3 traceruote sources vary as follows, Utah-Buenos Aires $\leq$ Utah-Delhi $\leq$ Utah-Johannesburg. 
 While it does take more hops to go from delhi to utah,than from Buenos Aires, it takes less hops to go from Johannesburg
 to utah than from Delhi. This shows that there might be some exceptions to the trend that it takes more hops for larger distances.\\
 Similarly for iitd.ac.in, the number of hops needed by local device (laptop) is 4, but Buenos Aires which is farther away from Delhi 
@@ -562,9 +573,11 @@ to optimise hops across the world is not high for these sites.
     \end{tabular}
 \end{table}
 
+
 In general the latency increases with number of hops, but for similar hop size, there might be some exceptions to the rule, for example 
 Latency for facebook in Buenos Aires and Johannesburg is more than that of Local device even though the number of hops is more for local device.
-
+(On performing traceroute from other sites with servers from the same cities,
+we got much less times around 2 ms for google and around 1 ms for facebook. It might be possible that the servers used by cogent co in these cities use some slower connections or have higher traffic due to which the latency is increased)
 On the other hand,the latency seems to follow the trend of number of hops for universities like utah and iitd.
 
 \subsection*{Different IP addresses for same site}
@@ -579,20 +592,212 @@ For educational institutions, the requests are mostly from within the country. I
 performance across nations by maintaining multiple servers across the world. So, they have the same IP for multiple traceroute
 locations.
 
-\subsection*{d}
+\subsection*{ Path to different IP addresses}
 
 The paths to different IP addresses for the same site gives longer path when request is made to an IP address obtained from a request 
 to a different country. 
 
 One possible reason for this can be that networks are optimised to ensure that people alwasy get access to the least latency path. So,
-the IP address to which the domain name corresponds to in our nation is the closest IP address (server) available to us.
+the IP address to which the domain name corresponds to in our nation is the closest IP address (server) available to us.\\
 
-\subsection*{e}
+Path to facebook server in argentina:-
+
+\begin{code}
+traceroute to 157.240.12.35 (157.240.12.35), 64 hops max, 52 byte packets
+ 1  10.184.0.13 (10.184.0.13)  4.716 ms  3.439 ms  3.399 ms
+ 2  10.254.175.5 (10.254.175.5)  3.691 ms
+    10.254.175.1 (10.254.175.1)  3.551 ms  4.911 ms
+ 3  10.255.1.34 (10.255.1.34)  4.078 ms  4.580 ms  3.608 ms
+ 4  10.119.233.65 (10.119.233.65)  3.430 ms  3.620 ms  3.511 ms
+ 5  * * *
+ 6  * * *
+ 7  10.1.200.137 (10.1.200.137)  70.153 ms  61.226 ms  60.607 ms
+ 8  * * 10.255.238.254 (10.255.238.254)  64.307 ms
+ 9  10.152.7.214 (10.152.7.214)  60.612 ms
+    10.152.7.38 (10.152.7.38)  33.859 ms  29.950 ms
+10  ae1.pr01.bom1.tfbnw.net (157.240.68.238)  43.677 ms
+    ae2.pr02.bom1.tfbnw.net (157.240.66.204)  111.273 ms  33.673 ms
+11  ae110.ar04.bom1.tfbnw.net (157.240.53.32)  47.238 ms
+    ae1.pr01.bom1.tfbnw.net (157.240.68.238)  61.212 ms
+    ae2.pr02.bom1.tfbnw.net (157.240.66.204)  70.719 ms
+12  ae101.bb02.bom1.tfbnw.net (31.13.24.28)  31.595 ms
+    ae104.bb02.bom1.tfbnw.net (31.13.25.136)  36.856 ms
+    ae120.ar03.bom1.tfbnw.net (157.240.52.204)  33.797 ms
+13  ae13.bb03.mrs1.tfbnw.net (31.13.24.10)  129.817 ms
+    ae103.bb04.bom1.tfbnw.net (204.15.21.6)  129.699 ms
+    ae103.bb01.bom1.tfbnw.net (31.13.25.134)  43.936 ms
+14  ae151.bb04.mrs1.tfbnw.net (129.134.100.63)  128.767 ms
+    ae36.bb03.mrs1.tfbnw.net (74.119.79.134)  120.898 ms
+    ae38.bb02.bio1.tfbnw.net (157.240.35.74)  157.822 ms
+15  ae202.bb04.vab1.tfbnw.net (129.134.40.17)  289.140 ms
+    ae203.bb04.vab1.tfbnw.net (129.134.40.15)  275.552 ms
+    ae203.bb02.vab1.tfbnw.net (129.134.40.13)  356.678 ms
+16  ae203.bb04.vab1.tfbnw.net (129.134.40.15)  281.882 ms
+    ae72.bb02.clt3.tfbnw.net (129.134.49.28)  312.436 ms
+    ae203.bb04.vab1.tfbnw.net (129.134.40.15)  275.036 ms
+17  ae68.bb04.clt3.tfbnw.net (129.134.103.32)  312.192 ms
+    ae0.bb04.jax3.tfbnw.net (129.134.43.239)  353.491 ms  409.257 ms
+18  ae0.bb04.jax3.tfbnw.net (129.134.43.239)  425.756 ms  416.653 ms *
+19  ae38.bb02.gru2.tfbnw.net (129.134.105.120)  377.806 ms * *
+20  ae38.bb02.gru2.tfbnw.net (129.134.105.120)  449.357 ms
+    ae26.bb02.gru1.tfbnw.net (129.134.43.176)  417.638 ms *
+\end{code}
+\begin{code}
+21  ae1.ar02.gru2.tfbnw.net (129.134.50.239)  452.552 ms
+    po211.asw02.gru2.tfbnw.net (31.13.26.37)  475.985 ms
+    ae2.ar02.gru1.tfbnw.net (204.15.22.255)  456.700 ms
+    ae2.ar02.gru1.tfbnw.net (204.15.22.255)  456.700 ms
+22  po231.psw04.gru2.tfbnw.net (129.134.33.103)  374.678 ms
+    po284.psw02.gru2.tfbnw.net (129.134.110.253)  365.605 ms
+    po211.asw01.gru2.tfbnw.net (31.13.26.35)  370.564 ms
+23  po221.asw02.gru1.tfbnw.net (157.240.53.11)  372.071 ms
+    po211.asw02.gru1.tfbnw.net (157.240.53.9)  402.270 ms  378.310 ms
+24  edge-star-mini-shv-02-gru2.facebook.com (157.240.12.35)  625.707 ms
+    157.240.39.51 (157.240.39.51)  381.572 ms
+    edge-star-mini-shv-02-gru2.facebook.com (157.240.12.35)  381.528 ms
+\end{code}
+
+
+Path to facebook server reached from Johannesburg
+\begin{code}
+traceroute to 157.240.221.35 (157.240.221.35), 64 hops max, 52 byte packets
+ 1  10.184.0.13 (10.184.0.13)  16.150 ms  9.766 ms  3.032 ms
+ 2  10.254.175.1 (10.254.175.1)  3.990 ms
+    10.254.175.5 (10.254.175.5)  17.252 ms  3.784 ms
+ 3  10.255.1.34 (10.255.1.34)  4.336 ms  3.779 ms  3.978 ms
+ 4  10.119.233.65 (10.119.233.65)  4.032 ms  3.950 ms  4.568 ms
+ 5  * * *
+ 6  * * *
+ 7  10.1.200.137 (10.1.200.137)  69.485 ms  60.936 ms  62.089 ms
+ 8  * * 10.255.238.254 (10.255.238.254)  60.728 ms
+ 9  10.152.7.214 (10.152.7.214)  60.139 ms
+    10.152.7.38 (10.152.7.38)  38.051 ms  31.260 ms
+10  115.247.69.85 (115.247.69.85)  32.756 ms
+    10.152.7.233 (10.152.7.233)  60.649 ms  43.846 ms
+11  115.247.69.85 (115.247.69.85)  30.320 ms  28.079 ms  30.105 ms
+12  * * *
+13  * * *
+14  * * *
+15  * * *
+16  * po141.asw01.lhr3.tfbnw.net (129.134.45.56)  146.154 ms *
+17  po141.asw02.lhr3.tfbnw.net (129.134.45.58)  156.654 ms
+    po232.psw02.lhr8.tfbnw.net (129.134.50.85)  144.228 ms
+    157.240.38.145 (157.240.38.145)  144.781 ms
+18  173.252.67.89 (173.252.67.89)  149.669 ms
+    173.252.67.117 (173.252.67.117)  154.259 ms
+    157.240.38.235 (157.240.38.235)  155.026 ms
+19  edge-star-mini-shv-01-lhr8.facebook.com (157.240.221.35)  155.644 ms  157.143 ms  153.456 ms
+\end{code}
+
+Clearly both latency and number of hops are much larger than the corresponding values from local device.
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+    \hline
+        ~ &Number of Hops & Latency in ms \\ \hline
+        IP from local device & 11 & 42.32  \\ \hline
+        IP from Buenos Aires & 24 & 381.528 \\ \hline
+        IP from Johannesburg & 19 & 155.644 \\ \hline
+        
+    \end{tabular}
+\end{table}
+\subsection*{Peering with Google and Facebook}
 
 For most countries, Google's network seems to be peered to the local ISP. However, on tracerouting for google and facebook from a 
 server in Beijing, no response in received after 20 hops and it seems like the packet is dropped. It is possible that China's local 
 ISPs are not peered with Google's network.
 
+\subsection*{ASIP Analysis}
+
+\begin{table}[]
+\footnotesize
+\begin{tabular}{|l|l|}
+\hline
+\textbf{IP Address}                                                         & \textbf{AS}                                                                     \\ \hline
+1  10.184.0.13 (10.184.0.13)                                                & Private IP                                                                      \\ \hline
+2  10.254.175.1 (10.254.175.1                                               & Private IP                                                                      \\ \hline
+3  10.255.1.34 (10.255.1.34)                                                & Private IP                                                                      \\ \hline
+4  10.119.233.65 (10.119.233.65)                                            & Private IP                                                                      \\ \hline
+5  10.1.207.69 (10.1.207.69)                                                & Private IP                                                                      \\ \hline
+6  10.1.200.137 (10.1.200.137)                                              & Private IP                                                                      \\ \hline
+7  10.255.238.254 (10.255.238.254)                                          & Private IP                                                                      \\ \hline
+8  180.149.48.18 (180.149.48.18)                                            & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} NKN-CORE-NW NKN Core Network, IN} \\ \hline
+9  180.149.48.6 (180.149.48.6)                                              & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} NKN-CORE-NW NKN Core Network, IN} \\ \hline
+10  180.149.48.20 (180.149.48.20)                                           & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} NKN-CORE-NW NKN Core Network, IN} \\ \hline
+11  fourhundredge-0-0-0-2.4079.core1.ashb.net.internet2.edu (163.253.1.116) & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} INTERNET2-RESEARCH-EDU}           \\ \hline
+12  fourhundredge-0-0-0-16.4079.core2.ashb.net.internet2.edu (163.253.1.3)  & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} INTERNET2-RESEARCH-EDU}           \\ \hline
+13  fourhundredge-0-0-0-16.4079.core2.ashb.net.internet2.edu (163.253.1.3   & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} INTERNET2-RESEARCH-EDU}           \\ \hline
+14  fourhundredge-0-0-0-1.4079.core2.clev.net.internet2.edu (163.253.1.139) & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} INTERNET2-RESEARCH-EDU}           \\ \hline
+15  fourhundredge-0-0-0-2.4079.core2.eqch.net.internet2.edu (163.253.2.17)  & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} INTERNET2-RESEARCH-EDU}           \\ \hline
+16  fourhundredge-0-0-0-2.4079.core2.chic.net.internet2.edu (163.253.2.18)  & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} INTERNET2-RESEARCH-EDU}           \\ \hline
+17  fourhundredge-0-0-0-1.4079.core1.kans.net.internet2.edu (163.253.1.245) & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} INTERNET2-RESEARCH-EDU}           \\ \hline
+18  fourhundredge-0-0-0-1.4079.core1.denv.net.internet2.edu (163.253.1.242) & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} INTERNET2-RESEARCH-EDU}           \\ \hline
+19  fourhundredge-0-0-0-3.4079.core1.salt.net.internet2.edu (163.253.1.171) & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} INTERNET2-RESEARCH-EDU}           \\ \hline
+20  163.253.5.7 (163.253.5.7)                                               & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} INTERNET2-RESEARCH-EDU}           \\ \hline
+21  tdc-beibr-b-170-int.uen.net (140.197.249.81)                            & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} WEST-NET-WEST}                    \\ \hline
+22  tdc-beibr-b-170-int.uen.net (140.197.249.81)                            & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} WEST-NET-WEST}                    \\ \hline
+24  ddc-pep-b-129-int.uen.net (140.197.253.97)                              & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} WEST-NET-WEST}                    \\ \hline
+25  ebc-pep-a-178-int.uen.net (140.197.252.84)                              & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} WEST-NET-WEST}                    \\ \hline
+26  * ebc-pep-a-178-int.uen.net (140.197.252.84)                            & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} WEST-NET-WEST}                    \\ \hline
+27  * 199.104.93.22 (199.104.93.22)                                         & UTAH                                                                            \\ \hline
+28  199.104.93.22 (199.104.93.22)  321.654 ms                               & UTAH                                                                            \\ \hline
+29  155.99.130.57 (155.99.130.57)  416.730 ms                               & UTAH                                                                            \\ \hline
+30  155.99.130.103 (155.99.130.103)  414.959 ms                             & UTAH                                                                            \\ \hline
+31  172.31.241.255 (172.31.241.255)  416.605 ms                             & UTAH                                                                            \\ \hline
+32  172.31.241.255 (172.31.241.255)  416.528 ms                             & PRIVATE                                                                         \\ \hline
+33  172.31.241.25 (172.31.241.25)                                           & PRIVATE                                                                         \\ \hline
+34  www.utah.edu (155.98.186.21)                                            & UTAH                                                                            \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[]
+\begin{tabular}{|l|l|}
+\hline
+\textbf{IP Adresses}                                                        & \textbf{AS}                                                           \\ \hline
+1  10.184.0.13 (10.184.0.13)                                                & Private                                                               \\ \hline
+2  10.254.175.5 (10.254.175.5)                                              & Private                                                               \\ \hline
+3  10.255.1.34 (10.255.1.34)                                                & Private                                                               \\ \hline
+4  10.119.233.65 (10.119.233.65)                                            & Private                                                               \\ \hline
+5  10.1.207.69 (10.1.207.69)                                                & Private                                                               \\ \hline
+6  * * *                                                                    &                                                                       \\ \hline
+7  10.255.238.122 (10.255.238.122)                                          & Private                                                               \\ \hline
+8  10.152.7.214 (10.152.7.214)                                              & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} Private}                \\ \hline
+9  10.152.7.233 (10.152.7.233)                                              & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} Private}                \\ \hline
+10  po101.psw01.bom1.tfbnw.net (31.13.29.205)                               & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} Facebook}               \\ \hline
+11  po101.psw04.bom1.tfbnw.net (157.240.44.31)                              & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} Facebook}               \\ \hline
+12  157.240.38.65 (157.240.38.65)                                           & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} Facebook}\\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[]
+\begin{tabular}{|l|l|}
+\hline
+\textbf{IP Adresses}                                                        & \textbf{AS}                                                           \\ \hline
+1  10.184.0.13 (10.184.0.13)                                                & Private                                                               \\ \hline
+2  10.254.175.5 (10.254.175.5)                                              & Private                                                               \\ \hline
+3  10.254.236.6 (10.254.236.6)                                              & Private                                                               \\ \hline
+4  www.iitd.ac.in (10.10.211.212)                                           & Private\\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[]
+\begin{tabular}{|l|l|}
+\hline
+\textbf{IP Adresses}                                                        & \textbf{AS}                                                           \\ \hline
+1  10.184.0.13 (10.184.0.13)                                                & Private                                                               \\ \hline
+2  10.254.175.1 (10.254.175.1)                                              & Private                                                               \\ \hline
+3  10.255.1.34 (10.255.1.34)                                                & Private                                                               \\ \hline
+4  10.119.233.65 (10.119.233.65)                                            & Private                                                               \\ \hline
+5  * * *                                                                    &                                                                       \\ \hline
+6  10.119.234.162                                                           & Private                                                               \\ \hline
+7  72.14.194.160                                                            & Google                                                                \\ \hline
+8  108.170.251.113                                                          & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} Google}                 \\ \hline
+9  142.251.52.217 (142.251.52.217)                                          & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} Google}                 \\ \hline
+10  del12s08-in-f14.1e100.net (142.250.194.238)                             & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} Google}  \\ \hline
+\end{tabular}
+\end{table}
+\clearpage
 \clearpage
 
 \section{Packet Analysis}
