@@ -2,10 +2,10 @@
 
 import os
 import subprocess
-site="www.google.com"
+# site="www.google.com"
 # site="157.240.12.35"
 
-# site=input("Enter site: ")
+site=input("Enter site: ")
 
 # Getting the IP Address
 result=subprocess.run(f"nslookup {site}".split(), stdout=subprocess.PIPE, text=True)
@@ -18,10 +18,10 @@ print(f"traceroute to {site} ({IP}), 64 hops max")
 
 def regcheck(s):
 	try:
-		# print(s[-2:],s[0:-2],(s[-2:]=="ms" and s[0:-2].isdigit()))
 		return (s[-2:]=="ms")
 	except:
 		return False
+
 def app(s):
 	if regcheck(l3.split()[2]): return s
 	else: return "*"
