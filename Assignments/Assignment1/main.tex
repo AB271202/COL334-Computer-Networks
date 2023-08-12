@@ -575,9 +575,8 @@ Latency Analysis
         \caption{IITD DNS}
         \label{fig:IITDDNS}
     \end{figure}
-    \subsubsection*{Observations}
-    As shown in the figure \cref{fig:IITDDNS}, we observe there were DNS queries and responses for {\tt iitd.ac.in}. The request-response began at 2.080615s and ended at 2.088379s lasting for a total of 7.764ms. 
-
+    \subsection*{Observations}
+    There were DNS queries and responses for {\tt iitd.ac.in}. The request-response began at 2.080615s and ended at 2.088379s lasting for a total of 7.764ms.
     \item On applying a {\tt http} filter, only one request is observed as shown in \cref{fig:IITDHTTP}
     \begin{figure}[!ht]
         \centering
@@ -585,10 +584,60 @@ Latency Analysis
         \caption{IITD HTTP}
         \label{fig:IITDHTTP}
     \end{figure}
-    \subsubsection*{Observations}
+    \subsection*{Observations}
+    Only one request is observed. The request was for {\tt http://www.iitd.ac.in/} and the response was {\tt 302 Found} indicating that the requested resource has been moved to a different URL. The text data tells us that "The document has moved https://home.iitd.ac.in/".
+
+    HTTPS traffic is encrypted using SSL/TLS, and the contents of the packets are scrambled and unreadable without the decryption keys. Hence, we are not able to find any html / css / js files for the webpage in the packets.
+
     
-    \item Next we applied the filter {\tt ((ip.src==10.184.22.156 \&\& ip.dst==10.10.211.212) || (ip.src==10.10.211.212 \&\& ip.dst==10.184.22.156)) \&\& tcp}
+    \item Next we applied the filter {\tt ((ip.src==10.184.22.156 \&\& ip.dst==10.10.211.212) || (ip.src==10.10.211.212 \&\& ip.dst==10.184.22.156)) \&\& tcp} to get the TCP packets between the two hosts. The output is shown in \cref{fig:IITDTCP}
+    \begin{figure}[!ht]
+        \centering
+        \includegraphics[scale=0.5]{images/IITD tcp.png}
+        \caption{IITD TCP}
+        \label{fig:IITDTCP}
+    \end{figure}
+
+    \item On running a {\tt http} filter on {\tt indianexpress.com}, we received the output \cref{fig:IndianExpress}
+    \begin{figure}[!ht]
+        \centering
+        \includegraphics[scale=0.5]{images/indianexpress.png}
+        \caption{Indian Express}
+        \label{fig:IndianExpress}
+    \end{figure}
+    \subsection*{Observations}
+    As mentioned above, HTTPS traffic is encrypted using SSL/TLS, and the contents of the packets are unreadable without the decryption keys. Hence, we see a very sparse http traffic and are not able to find any html/css/js files being transferred for the webpage in the packets.
 \end{enumerate}
+
+Similarly, we ran the filters for {\tt act4d.iitd.ac.in} and got the outputs \cref{fig:ACT4DDNS} \cref{fig:ACT4DHTTP} \cref{fig:ACT4DTCP}:
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[scale=0.5]{images/act4d dns.png}
+    \caption{ACT4D DNS}
+    \label{fig:ACT4DDNS}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[scale=0.5]{images/act4d http.png}
+    \caption{ACT4D http}
+    \label{fig:ACT4DHTTP}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[scale=0.5]{images/act4d tcp.png}
+    \caption{ACT4D TCP (filter {\tt ((ip.src==10.184.22.156 \&\& ip.dst==10.237.26.108) || 
+    (ip.src==10.237.26.108 \&\& ip.dst==10.184.22.156)) \&\& tcp})}
+    \label{fig:ACT4DTCP}
+\end{figure}
+
+\subsection*{Observations}
+\begin{itemize}
+    \item On applying a {\tt http} filter, only one request is observed as shown in \cref{fig:IITDHTTP}. Similarly for the {\tt indianexpress.com} website, very few {\tt http} requests are observed.
+    \item 
+\end{itemize}
+
 \clearpage
 \input{appendix}
 \end{document}
