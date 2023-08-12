@@ -278,6 +278,7 @@ traceroute to facebook.com (157.240.16.35), 64 hops max, 52 byte packets
 \end{enumerate}
 
 \clearpage
+
 \section{Packet Analysis}
 \begin{enumerate}[a.]
     \item We ran a DNS filter on the output to {\tt iitd.ac.in} and got the following result(\cref{fig:IITDDNS}):
@@ -288,7 +289,18 @@ traceroute to facebook.com (157.240.16.35), 64 hops max, 52 byte packets
         \label{fig:IITDDNS}
     \end{figure}
     \subsubsection*{Observations}
-    As shown in the figure \cref{fig:IITDDNS}, we observe  there were DNS queries and responses for {\tt iitd.ac.in}. It began
+    As shown in the figure \cref{fig:IITDDNS}, we observe there were DNS queries and responses for {\tt iitd.ac.in}. The request-response began at 2.080615s and ended at 2.088379s lasting for a total of 7.764ms. 
+
+    \item On applying a {\tt http} filter, only one request is observed as shown in \cref{fig:IITDHTTP}
+    \begin{figure}[!ht]
+        \centering
+        \includegraphics[scale=0.5]{images/IITD http.png}
+        \caption{IITD HTTP}
+        \label{fig:IITDHTTP}
+    \end{figure}
+    \subsubsection*{Observations}
+    
+    \item Next we applied the filter {\tt ((ip.src==10.184.22.156 \&\& ip.dst==10.10.211.212) || (ip.src==10.10.211.212 \&\& ip.dst==10.184.22.156)) \&\& tcp}
 \end{enumerate}
 \clearpage
 \input{appendix}
