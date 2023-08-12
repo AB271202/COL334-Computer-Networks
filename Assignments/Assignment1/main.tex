@@ -614,7 +614,7 @@ ISPs are not peered with Google's network.
         \label{fig:IITDHTTP}
     \end{figure}
     \subsection*{Observations}
-    Only one request is observed. The request was for {\tt http://www.iitd.ac.in/} and the response was {\tt 302 Found} indicating that the requested resource has been moved to a different URL. The text data tells us that "The document has moved https://home.iitd.ac.in/".
+    Only one request is observed. The request was for {\tt http://www.iitd.ac.in/} and the response was {\tt 302 Found} indicating that the requested resource has been moved to a different URL. The text data tells us that "The document has moved {\tt https://home.iitd.ac.in/}".
 
     HTTPS traffic is encrypted using SSL/TLS, and the contents of the packets are scrambled and unreadable without the decryption keys. Hence, we are not able to find any html / css / js files for the webpage in the packets.
 
@@ -626,6 +626,9 @@ ISPs are not peered with Google's network.
         \caption{IITD TCP}
         \label{fig:IITDTCP}
     \end{figure}
+    \subsection*{Observations}
+    Total 9 connections were opened. Of these 2 were {\tt http} and 7 were {\tt https}, as identified by their port number (80 for {\tt http} and 443 for {\tt https}). Thus, for the {\tt http} request in part (b), we have 2 corresponding tcp connections. 
+    % 57, 58, 82, 316, 317, 332, 333, 339, 2134    
 
     \item On running a {\tt http} filter on {\tt indianexpress.com}, we received the output \cref{fig:IndianExpress}
     \begin{figure}[!ht]
@@ -635,7 +638,7 @@ ISPs are not peered with Google's network.
         \label{fig:IndianExpress}
     \end{figure}
     \subsection*{Observations}
-    As mentioned above, HTTPS traffic is encrypted using SSL/TLS, and the contents of the packets are unreadable without the decryption keys. Hence, we see a very sparse http traffic and are not able to find any html/css/js files being transferred for the webpage in the packets.
+    As mentioned above, HTTPS traffic is encrypted using SSL/TLS, and the contents of the packets are unreadable without the decryption keys. Hence, we see a very sparse http traffic and are not able to find any html/css/js files being transferred for the webpage in the packets. Wireshark can capture the encrypted packets, but the payload will appear as encrypted gibberish.
 \end{enumerate}
 
 Similarly, we ran the filters for {\tt act4d.iitd.ac.in} and got the outputs \cref{fig:ACT4DDNS} \cref{fig:ACT4DHTTP} \cref{fig:ACT4DTCP}:
