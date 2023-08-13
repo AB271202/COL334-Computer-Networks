@@ -625,8 +625,14 @@ On running traceroute from Luxembourg, we find that the path taken goes through 
 This makes sense as Luxembourg is a small nation with a small population which makes it more optimal for it to connect to Germany's 
 ISPs and use Google's network there instead of setting up a peering point for itself.
 
-Similarly on running traceroute from Google, we find that the connection jumps from Manama, Bahrain to a data center in US but not one 
-of Google. The server belongs to an Amazon Data center.
+Similarly on running traceroute to Google from Bahrain, we find that the connection jumps from Manama, Bahrain to  an Amazon Data 
+center in US but not one of Google. 
+
+Similarly for facebook too, Bahrain uses an Amazon Data center to reach US and then changes to Google's network.
+
+On running traceroute from Lagos, the route taken is through the West Indian Ocean Cable Company to the facebook servers in US. The 
+local ISP is not peered to facebook. 
+
 
 \subsection*{ASIP Analysis}
 \subsubsection*{Path from Laptop (Hostel wifi) to utah.edu}
@@ -719,5 +725,33 @@ of Google. The server belongs to an Amazon Data center.
 8  108.170.251.113                                                          & Google                 \\ \hline
 9  142.251.52.217 (142.251.52.217)                                          & Google                 \\ \hline
 10  del12s08-in-f14.1e100.net (142.250.194.238)                             & Google  \\ \hline
+\end{tabular}
+\end{table}
+\subsubsection*{Path from Laptop (Hostel wifi) to uct.ac.za}
+\begin{table}[!ht]
+      \centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{IP Address}                                          & \textbf{ASN}                                                 \\ \hline
+1  10.184.0.13 (10.184.0.13)                                 & Private                                                      \\ \hline
+2  10.254.175.5 (10.254.175.5)                               & Private                                                      \\ \hline
+3  10.255.1.34 (10.255.1.34)                                 & Private                                                      \\ \hline
+4  10.119.233.65 (10.119.233.65)                             & Private                                                      \\ \hline
+5  * * *                                                     & -                                                            \\ \hline
+6  10.1.207.65 (10.1.207.65)                                 & Private                                                      \\ \hline
+7  10.1.200.137 (10.1.200.137)                               & Private                                                      \\ \hline
+8  10.255.238.122 (10.255.238.122)                           & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} Private}       \\ \hline
+9  180.149.48.18 (180.149.48.18)                             & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} NKN-CORE-NW}   \\ \hline
+10  180.149.48.2 (180.149.48.2)                              & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} NKN-CORE-NW}   \\ \hline
+11  xe-0-0-2-0-600-ams1-ir1.net.tenet.ac.za (155.232.220.18) & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} TENET-1}       \\ \hline
+12  xe-0-0-1-1-10-mtz1-ir1.net.tenet.ac.za (155.232.1.21)    & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} TENET-1}       \\ \hline
+13  xe-0-0-1-1-10-mtz1-ir1.net.tenet.ac.za (155.232.1.21)    & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} TENET-1}       \\ \hline
+14  et-1-1-1-0-isd1-pe1.net.tenet.ac.za (155.232.1.153)      & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} TENET-1}       \\ \hline
+15  et-1-1-4-0-cpt3-pe1.net.tenet.ac.za (155.232.1.148)      & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} TENET-1}       \\ \hline
+16  154.114.124.1 (154.114.124.1)                            & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} TENET-1}       \\ \hline
+17  * 154.114.124.1 (154.114.124.1)                          & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} TENET-1}       \\ \hline
+18  * * *                                                    & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} -}             \\ \hline
+19  * * *                                                    & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} -}             \\ \hline
+20  * * *                                                    & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} -}             \\ \hline
 \end{tabular}
 \end{table}
