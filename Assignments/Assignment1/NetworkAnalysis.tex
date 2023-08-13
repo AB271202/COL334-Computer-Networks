@@ -108,8 +108,8 @@ PING google.com (142.250.194.238) 69(97) bytes of data.
 --- google.com ping statistics ---
 5 packets transmitted, 0 received, 100% packet loss, time 4009ms  
 \end{code}
-However, we also observe that the max ping size depends on the site requested for. For example, we saw that for {\tt iitd.ac.in}, it is 1472 bytes.
-We can run the following python code to find the maximum packet size for a given site:
+However, the max ping size depends on the site requested for. For example, we saw that for {\tt iitd.ac.in}, it is 1472 bytes.
+We can run the following python code to find the maximum packet size for a given site. In it, 65007 is the maximum value of the size of the packet that can be sent.
 \begin{code}
     #!/usr/bin/python3
 
