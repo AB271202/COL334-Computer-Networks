@@ -409,7 +409,14 @@ The distance between utah and the 3 traceruote sources vary as follows, Utah-Bue
 While it does take more hops to go from delhi to utah,than from Buenos Aires, it takes less hops to go from Johannesburg
 to utah than from Delhi. This shows that there might be some exceptions to the trend that it takes more hops for larger distances.\\
 Similarly for iitd.ac.in, the number of hops needed by local device (laptop) is 4, but Buenos Aires which is farther away from Delhi 
-than Johannesburg takes lesser number of hops than Johannesburg.
+than Johannesburg takes lesser number of hops than Johannesburg to reach IIT Delhi.
+This exception might arise because, the number of hops depends on the distance from source to destination along the path taken by fiber 
+optic cables. If the fiber optic cables do not take the geographically smallest route from source to destination then there might be a 
+difference in the geographical distance vs number of hops trend. For example if the connection from delhi to utah is routed throught 
+the atlantic than the pacific ocean then the geographical distance becomes larger from India to Utah than Johannesburg to Utah and then 
+it will start following the trend of larger geographical distance implying larger number of hops.
+In fact this hypothesis can be checked from the fact that the first US based server on the path (163.253.1.116) is actually located in 
+New York which suggests that the path taken is through the Atlantic.
 \item Number of hops to Google and Facebook.\\
 In general, Google and Facebook seem to take fewer hops than other sites. Also the number of hops needed is almost constant and varies
 around 9-13. 
@@ -570,8 +577,15 @@ For most countries, Google's network seems to be peered to the local ISP. Howeve
 server in Beijing, no response in received after 20 hops and it seems like the packet is dropped. It is possible that China's local 
 ISPs are not peered with Google's network.
 
-\subsection*{ASIP Analysis}
+On running traceroute from Luxembourg, we find that the path taken goes through Germany before entering Google's network in Germany.
+This makes sense as Luxembourg is a small nation with a small population which makes it more optimal for it to connect to Germany's 
+ISPs and use Google's network there instead of setting up a peering point for itself.
 
+Similarly on running traceroute from Google, we find that the connection jumps from Manama, Bahrain to a data center in US but not one 
+of Google. The server belongs to an Amazon Data center.
+
+\subsection*{ASIP Analysis}
+\subsubsection*{Path from Laptop (Hostel wifi) to utah.edu}
 \begin{table}[!ht]
     \centering
 \footnotesize
@@ -613,7 +627,7 @@ ISPs are not peered with Google's network.
 34  www.utah.edu (155.98.186.21)                                            & UTAH                                                                            \\ \hline
 \end{tabular}
 \end{table}
-
+\subsubsection*{Path from Laptop (Hostel wifi) to facebook}
 \begin{table}[!ht]
     \centering
 \begin{tabular}{|l|l|}
@@ -633,7 +647,7 @@ ISPs are not peered with Google's network.
 12  157.240.38.65 (157.240.38.65)                                           & Facebook\\ \hline
 \end{tabular}
 \end{table}
-
+\subsubsection*{Path from Laptop (Hostel wifi) to iitd.ac.in}
 \begin{table}[!ht]
     \centering
 \begin{tabular}{|l|l|}
@@ -645,7 +659,7 @@ ISPs are not peered with Google's network.
 4  www.iitd.ac.in (10.10.211.212)                                           & Private\\ \hline
 \end{tabular}
 \end{table}
-
+\subsubsection*{Path from Laptop (Hostel wifi) to google}
 \begin{table}[!ht]
     \centering
 \begin{tabular}{|l|l|}
