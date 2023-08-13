@@ -1,0 +1,128 @@
+\section{Network Analysis}
+\begin{enumerate}[a.]
+    \item We ran {\tt tracert} on {\tt iitd.ac.in} outside IITD network and got the following output:
+    \begin{code}
+PS C:\Users\Anish> tracert iitd.ac.in
+
+Tracing route to iitd.ac.in [103.27.9.24]
+over a maximum of 30 hops:
+
+ 1    4 ms    3 ms    9 ms dsldevice.lan [192.168.1.1]
+ 2   87 ms   73 ms   26 ms abts-north-dynamic-255.187.69.182.airtelbroadband.in [182.69.187.255]
+ 3   34 ms   28 ms   48 ms 125.18.240.153
+ 4   38 ms   45 ms   38 ms 116.119.106.136
+ 5   47 ms   53 ms   49 ms 49.44.220.188
+ 6    *       *       *    Request timed out.
+ 7    *       *       *    Request timed out.
+ 8   47 ms   43 ms   47 ms 136.232.148.178
+ 9    *       *       *    Request timed out.
+10    *       *       *    Request timed out.
+11    *       *       *    Request timed out.
+12   45 ms   59 ms   52 ms 103.27.9.24
+13  187 ms   46 ms   61 ms 103.27.9.24
+14   47 ms   48 ms   49 ms 103.27.9.24
+
+Trace complete.
+    \end{code}
+    \subsection*{Observations}
+    As seen above, hops 6 to 11 (except 8) show "Request timed out," which can be indicative of routers along the path that do not respond to the traceroute requests. There is no specific indication of IPv6 usage here; the timeouts could be due to various reasons, including router/firewall configurations. 
+
+    We also notice that {\tt 192.168.1.1} belongs to a private IP space.
+
+    Multiple replies from the final destination IP address (103.27.9.24) raise some curiosity. This could be due to various configurations, such as load balancers or redundant paths.
+
+    \item We used the {\tt tracert -6} to use IPv6 but always got the output as "{\tt Unable to resolve target system name iitd.ac.in}." 
+    Instead, we ran {\tt traceroute} and {\tt traceroute6} on {\tt google.com} from a different device and got the following outputs:
+    \begin{code}
+traceroute to google.com (142.250.194.14), 64 hops max, 52 byte packets
+1  192.168.177.193 (192.168.177.193)  6.868 ms  5.484 ms  6.407 ms
+2  192.168.59.1 (192.168.59.1)  22.799 ms  20.424 ms  27.980 ms
+3  192.168.27.81 (192.168.27.81)  29.813 ms
+    192.168.27.93 (192.168.27.93)  23.077 ms
+    192.168.27.81 (192.168.27.81)  21.428 ms
+4  192.168.27.109 (192.168.27.109)  36.098 ms
+    192.168.27.105 (192.168.27.105)  18.040 ms  28.957 ms
+5  nsg-corporate-1.39.185.122.airtel.in (122.185.39.1)  39.461 ms  66.444 ms  54.972 ms
+6  72.14.217.194 (72.14.217.194)  44.254 ms * *
+7  * * *
+8  * * 142.251.76.196 (142.251.76.196)  66.303 ms
+9  142.251.52.199 (142.251.52.199)  34.779 ms
+    74.125.244.196 (74.125.244.196)  21.764 ms *
+10  * 108.170.251.97 (108.170.251.97)  54.197 ms
+    del12s01-in-f14.1e100.net (142.250.194.14)  28.694 ms
+    \end{code}
+    \begin{code}
+traceroute6 to google.com (2404:6800:4007:82b::200e) from 2401:4900:47f2:38e0:39b1:d74c:415:5bc2, 
+64 hops max, 12 byte packets
+1  2401:4900:47f2:38e0::cf  4.692 ms  4.160 ms  8.239 ms
+2  2401:4900:47f2:38e0:0:e:4f83:ae40  19.732 ms  49.145 ms  22.655 ms
+3  2401:4900:0:c003::6402  41.364 ms  24.693 ms  33.984 ms
+4  2401:4900:0:c003::6631  29.735 ms
+    2401:4900:0:c003::663d  22.365 ms
+    2401:4900:0:c003::6631  37.879 ms
+5  2401:4900:0:c003::6664  24.392 ms
+    2401:4900:0:c003::6666  89.694 ms
+    2401:4900:0:c003::6662  36.760 ms
+6  2404:a800:1a00:801::e5  30.302 ms  36.528 ms  30.057 ms
+7  2001:4860:1:1::10c4  26.523 ms  36.783 ms  42.481 ms
+8  2404:6800:8107::1  66.432 ms
+    2404:6800:8129::1  38.610 ms
+    2404:6800:811f::1  87.382 ms
+9  2001:4860:0:1::54e6  23.382 ms
+    2001:4860:0:1::539a  26.511 ms
+    2001:4860:0:1::306a  64.307 ms
+10  2001:4860:0:1a::c  85.624 ms
+    2001:4860:0:9e::3  31.224 ms
+    2001:4860:0:9e::4  45.091 ms
+11  2001:4860::9:4001:67bd  88.336 ms
+    2001:4860::9:4001:67bc  74.379 ms  83.693 ms
+12  2001:4860:0:1340::1  73.053 ms
+    2001:4860::9:4001:b922  69.519 ms
+    2001:4860::9:4002:d27c  66.132 ms
+13  2001:4860:0:133f::1  66.074 ms
+    2001:4860::9:4001:163c  80.668 ms
+    2001:4860::9:4001:b922  97.471 ms
+14  maa03s46-in-x0e.1e100.net  86.829 ms
+    2001:4860:0:1::55ff  106.150 ms
+    maa03s46-in-x0e.1e100.net  69.276 ms
+    \end{code}
+    \subsection*{Observations}
+    Here, hops 1-4 are private IPs for IPv4. Router 7 did not respond to IPv4 request. We also observe that the number of hops for IPv6 packets are more than that for IPv4 packets. This is because IPv6 packets are routed differently than IPv4 packets.
+
+    \item We observe that the maximum packet size that can be sent is 68 (to {\tt google.com})
+\begin{code}
+root@IdeapadAB:/mnt/c/Users/Anish# ping -s 68 -c 5 google.com
+PING google.com (142.250.194.238) 68(96) bytes of data.
+76 bytes from del12s08-in-f14.1e100.net (142.250.194.238): icmp_seq=1 ttl=116 time=7.00 ms
+76 bytes from del12s08-in-f14.1e100.net (142.250.194.238): icmp_seq=2 ttl=116 time=6.73 ms
+76 bytes from del12s08-in-f14.1e100.net (142.250.194.238): icmp_seq=3 ttl=116 time=7.11 ms
+76 bytes from del12s08-in-f14.1e100.net (142.250.194.238): icmp_seq=4 ttl=116 time=6.05 ms
+76 bytes from del12s08-in-f14.1e100.net (142.250.194.238): icmp_seq=5 ttl=116 time=7.98 ms
+
+--- google.com ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4007ms
+rtt min/avg/max/mdev = 6.052/6.973/7.975/0.621 ms
+root@IdeapadAB:/mnt/c/Users/Anish# ping -s 69 -c 5 google.com
+PING google.com (142.250.194.238) 69(97) bytes of data.
+
+--- google.com ping statistics ---
+5 packets transmitted, 0 received, 100% packet loss, time 4009ms  
+\end{code}
+However, we also observe that the max ping size depends on the site requested for. For example, we saw that for {\tt iitd.ac.in}, it is 1472 bytes.
+We can run the following python code to find the maximum packet size for a given site:
+\begin{code}
+    #!/usr/bin/python3
+
+    import os
+    site=input("Enter the site: ")
+    l=1
+    r=65007
+    while l<r:
+        mid=(l+r)//2
+        if os.system("ping -c 1 -s "+str(mid)+" "+site)==0:
+            l=mid+1
+        else:
+            r=mid
+    print("\n\nMax ping size is: "+str(l-1))
+\end{code}
+\end{enumerate}
