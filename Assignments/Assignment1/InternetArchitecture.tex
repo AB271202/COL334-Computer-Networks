@@ -1,10 +1,10 @@
 \section{Internet Architecture}
 
-First we run a traceroute from our own IP address to the 5 different servers.
+We ran a traceroute from our own IP address, Buenos Aires and Johannesburg to the 5 different servers.
 
-\begin{enumerate}[a.]
+\subsection{Local Device, Delhi}
 
-\item Here is the route to {\tt www.google.com}
+\subsubsection{\tt www.google.com}
 \begin{code}
 Ankits-MacBook-Air-6:~ ankitmondal traceroute google.com
 traceroute to google.com (142.250.194.238), 64 hops max, 52 byte packets
@@ -21,7 +21,7 @@ traceroute to google.com (142.250.194.238), 64 hops max, 52 byte packets
  9  142.251.52.217 (142.251.52.217)  6.274 ms  6.749 ms  6.689 ms
 10  del12s08-in-f14.1e100.net (142.250.194.238)  6.588 ms  6.423 ms  6.608 ms
 \end{code}
-\item Here is the route to {\tt www.uct.ac.za}
+\subsubsection{\tt www.uct.ac.za}
 \begin{code}
 traceroute to cms-vip-prd.uct.ac.za (137.158.159.192), 64 hops max, 52 byte packets
  1  10.184.0.13 (10.184.0.13)  22.724 ms  10.579 ms  12.871 ms
@@ -56,6 +56,8 @@ traceroute to cms-vip-prd.uct.ac.za (137.158.159.192), 64 hops max, 52 byte pack
 19  * * *
 20  * * *
 21  * * *
+\end{code}
+\begin{code}
 22  * * *
 23  * * *
 24  * * *
@@ -66,7 +68,7 @@ traceroute to cms-vip-prd.uct.ac.za (137.158.159.192), 64 hops max, 52 byte pack
 29  * * *
 30  * * *
 \end{code}
-\item Here is the route to {\tt www.iitd.ac.in}
+\subsubsection{\tt www.iitd.ac.in}
 \begin{code}
 Ankits-MacBook-Air-6:~ ankitmondal traceroute www.iitd.ac.in
 traceroute to www.iitd.ac.in (10.10.211.212), 64 hops max, 52 byte packets
@@ -78,7 +80,7 @@ traceroute to www.iitd.ac.in (10.10.211.212), 64 hops max, 52 byte packets
     10.254.236.2 (10.254.236.2)  5.730 ms
  4  www.iitd.ac.in (10.10.211.212)  3.830 ms  4.643 ms  5.628 ms
  \end{code}
- \item Here is the route to {\tt www.utah.edu}
+ \subsubsection{\tt www.utah.edu}
  
 \begin{code}
 Ankits-MacBook-Air-6:~ ankitmondal traceroute www.utah.edu
@@ -104,8 +106,6 @@ traceroute to www.utah.edu (155.98.186.21), 64 hops max, 52 byte packets
 12  fourhundredge-0-0-0-16.4079.core2.ashb.net.internet2.edu (163.253.1.3)  312.121 ms
     fourhundredge-0-0-0-2.4079.core1.ashb.net.internet2.edu (163.253.1.116)  417.111 ms
     fourhundredge-0-0-0-16.4079.core2.ashb.net.internet2.edu (163.253.1.3)  416.768 ms
-\end{code}
-\begin{code}
 13  fourhundredge-0-0-0-16.4079.core2.ashb.net.internet2.edu (163.253.1.3)  313.367 ms
     fourhundredge-0-0-0-1.4079.core2.clev.net.internet2.edu (163.253.1.139)  319.440 ms  418.102 ms
 14  fourhundredge-0-0-0-1.4079.core2.clev.net.internet2.edu (163.253.1.139)  417.208 ms
@@ -114,6 +114,8 @@ traceroute to www.utah.edu (155.98.186.21), 64 hops max, 52 byte packets
 15  fourhundredge-0-0-0-2.4079.core2.eqch.net.internet2.edu (163.253.2.17)  410.326 ms
     fourhundredge-0-0-0-2.4079.core2.chic.net.internet2.edu (163.253.2.18)  416.659 ms
     fourhundredge-0-0-0-2.4079.core2.eqch.net.internet2.edu (163.253.2.17)  417.562 ms
+\end{code}
+\begin{code}
 16  fourhundredge-0-0-0-2.4079.core2.chic.net.internet2.edu (163.253.2.18)  415.580 ms  417.440 ms
     fourhundredge-0-0-0-1.4079.core1.kans.net.internet2.edu (163.253.1.245)  418.242 ms
 17  fourhundredge-0-0-0-1.4079.core1.kans.net.internet2.edu (163.253.1.245)  418.728 ms
@@ -158,7 +160,7 @@ traceroute to www.utah.edu (155.98.186.21), 64 hops max, 52 byte packets
 34  www.utah.edu (155.98.186.21)  412.101 ms * *
 \end{code}
 \clearpage
-\item Here is the route to {\tt www.facebook.com}
+\subsubsection{\tt www.facebook.com}
 \begin{code}
 Ankits-MacBook-Air-6:~ ankitmondal traceroute facebook.com
 traceroute to facebook.com (157.240.16.35), 64 hops max, 52 byte packets
@@ -184,11 +186,11 @@ traceroute to facebook.com (157.240.16.35), 64 hops max, 52 byte packets
     173.252.67.185 (173.252.67.185)  35.504 ms
     edge-star-mini-shv-01-bom1.facebook.com (157.240.16.35)  31.092 ms
 \end{code}
-\end{enumerate}
-We will now run traceroute from Buenos Aires, Argentina.
 
-\begin{enumerate}[a.]
-\item Here is the route to {\tt www.utah.edu}
+\subsection{Buenos Aires, Argentina}
+
+
+\subsubsection{\tt www.utah.edu}
 \begin{code}
 traceroute to www.utah.edu (155.98.186.21), 30 hops max, 60 byte packets
  1  * *
@@ -214,7 +216,7 @@ traceroute to www.utah.edu (155.98.186.21), 30 hops max, 60 byte packets
 21  uhome.web.utah.edu (155.98.186.21)  208.396 ms  208.195 ms
 \end{code}
 \clearpage
-\item Here is the route to {\tt www.uct.ac.za}
+\subsubsection{\tt www.uct.ac.za}
 \begin{code}
 traceroute to www.uct.ac.za (137.158.159.192), 30 hops max, 60 byte packets
  1  * *
@@ -248,7 +250,7 @@ traceroute to www.uct.ac.za (137.158.159.192), 30 hops max, 60 byte packets
 29  * *
 30  * *
 \end{code}
-\item Here is the route to {\tt www.iitd.ac.in}
+\subsubsection{\tt www.iitd.ac.in}
 \begin{code} 
 traceroute to iitd.ac.in (103.27.9.24), 30 hops max, 40 byte packets
  1  1.ip-176-103-190.ar.ipxon.net (190.103.176.1)  0.106 ms *  0.098 ms
@@ -270,7 +272,7 @@ traceroute to iitd.ac.in (103.27.9.24), 30 hops max, 40 byte packets
 17  103.27.9.24 (103.27.9.24)  376.449 ms  376.453 ms  376.450 ms
 18  103.27.9.24 (103.27.9.24)  376.084 ms  376.096 ms  376.107 ms
 \end{code}
-\item Here is the route to {\tt www.google.com}
+\subsubsection{\tt www.google.com}
 \begin{code}
  traceroute to google.com (142.250.179.174), 30 hops max, 60 byte packets
  1  * *
@@ -289,7 +291,7 @@ traceroute to iitd.ac.in (103.27.9.24), 30 hops max, 40 byte packets
 14  ams15s41-in-f14.1e100.net (142.250.179.174)  252.669 ms  253.135 ms
 \end{code}
 
-\item Here is the route to {\tt www.facebook.com}
+\subsubsection{\tt www.facebook.com}
 \begin{code}
 traceroute to facebook.com (157.240.12.35), 30 hops max, 60 byte packets
  1  * *
@@ -305,12 +307,11 @@ traceroute to facebook.com (157.240.12.35), 30 hops max, 60 byte packets
 11  157.240.39.47 (157.240.39.47)  245.564 ms 157.240.36.75 (157.240.36.75)  246.065 ms
 12  157.240.39.199 (157.240.39.199)  246.075 ms edge-star-mini-shv-02-gru2.facebook.com (157.240.12.35)  245.745 ms
 \end{code}
-\end{enumerate}
 
-We will now run traceroute from Johannesburg, South Africa.
+\subsection{Johannesburg, South Africa}
 
-\begin{enumerate}[a.]
-\item Here is the route to {\tt www.utah.edu}
+
+\subsubsection{\tt www.utah.edu}
 \begin{code}
 traceroute to www.utah.edu (155.98.186.21), 30 hops max, 60 byte packets
  1  gi0-0-0-17.20.agr11.jnb01.atlas.cogentco.com (206.185.255.1)  1.012 ms  0.935 ms
@@ -321,10 +322,10 @@ traceroute to www.utah.edu (155.98.186.21), 30 hops max, 60 byte packets
  6  be3600.ccr22.alb02.atlas.cogentco.com (154.54.0.221)  259.695 ms  259.620 ms
  7  be2878.ccr21.cle04.atlas.cogentco.com (154.54.26.129)  270.013 ms be2879.ccr22.cle04.atlas.cogentco.com (154.54.29.173)  270.017 ms
  8  be2718.ccr42.ord01.atlas.cogentco.com (154.54.7.129)  278.858 ms be2717.ccr41.ord01.atlas.cogentco.com (154.54.6.221)  277.041 ms
- 9  be2832.ccr22.mci01.atlas.cogentco.com (154.54.44.169)  288.298 ms be2831.ccr21.mci01.atlas.cogentco.com (154.54.42.165)  290.698 ms
-10  be3035.ccr21.den01.atlas.cogentco.com (154.54.5.89)  299.620 ms be3036.ccr22.den01.atlas.cogentco.com (154.54.31.89)  303.746 ms
 \end{code}
 \begin{code}
+ 9  be2832.ccr22.mci01.atlas.cogentco.com (154.54.44.169)  288.298 ms be2831.ccr21.mci01.atlas.cogentco.com (154.54.42.165)  290.698 ms
+10  be3035.ccr21.den01.atlas.cogentco.com (154.54.5.89)  299.620 ms be3036.ccr22.den01.atlas.cogentco.com (154.54.31.89)  303.746 ms
 11  be3038.ccr32.slc01.atlas.cogentco.com (154.54.42.97)  309.901 ms be3037.ccr21.slc01.atlas.cogentco.com (154.54.41.145)  311.669 ms
 12  be2685.rcr01.b020767-1.slc01.atlas.cogentco.com (154.54.41.118)  312.768 ms  314.768 ms
 13  * 38.142.233.58 (38.142.233.58)  316.241 ms
@@ -340,7 +341,7 @@ traceroute to www.utah.edu (155.98.186.21), 30 hops max, 60 byte packets
 23  172.31.241.29 (172.31.241.29)  321.137 ms  313.012 ms
 24  * uhome.web.utah.edu (155.98.186.21)  317.384 ms
 \end{code}
-\item Here is the route to {\tt www.uct.ac.za}
+\subsubsection{\tt www.uct.ac.za}
 \begin{code}
 traceroute to www.uct.ac.za (137.158.159.192), 30 hops max, 60 byte packets
  1  gi0-0-0-17.20.agr11.jnb01.atlas.cogentco.com (206.185.255.1)  0.962 ms  0.918 ms
@@ -375,7 +376,7 @@ traceroute to www.uct.ac.za (137.158.159.192), 30 hops max, 60 byte packets
 30  * *
 \end{code}
 \clearpage
-\item Here is the route to {\tt www.iitd.ac.in}
+\subsubsection{\tt www.iitd.ac.in}
 \begin{code}
  traceroute to iitd.ac.in (103.27.9.24), 30 hops max, 40 byte packets
  1  1.110.static.rdns.co.za (41.76.110.1)  0.181 ms *  0.733 ms
@@ -400,7 +401,7 @@ traceroute to www.uct.ac.za (137.158.159.192), 30 hops max, 60 byte packets
 20  103.27.9.24 (103.27.9.24)  428.229 ms  428.237 ms  428.239 ms
 21  103.27.9.24 (103.27.9.24)  427.742 ms  427.770 ms  427.922 ms
 \end{code}
-\item Here is the route to {\tt www.google.com}
+\subsubsection{\tt www.google.com}
 \begin{code}
 traceroute to www.google.com (172.217.169.36), 30 hops max, 60 byte packets
  1  gi0-0-0-17.20.agr11.jnb01.atlas.cogentco.com (206.185.255.1)  0.915 ms  0.920 ms
@@ -416,7 +417,7 @@ traceroute to www.google.com (172.217.169.36), 30 hops max, 60 byte packets
 11  lhr48s08-in-f4.1e100.net (172.217.169.36)  198.192 ms  198.100 ms
 \end{code}
 \clearpage
-\item Here is the route to {\tt www.facebook.com}
+\subsubsection{\tt www.facebook.com}
 \begin{code}
 traceroute to www.facebook.com (157.240.221.35), 30 hops max, 60 byte packets
  1  gi0-0-0-17.20.agr11.jnb01.atlas.cogentco.com (206.185.255.1)  0.848 ms  0.833 ms
@@ -429,50 +430,52 @@ traceroute to www.facebook.com (157.240.221.35), 30 hops max, 60 byte packets
  8  173.252.67.159 (173.252.67.159)  199.616 ms 173.252.67.179 (173.252.67.179)  197.139 ms
  9  edge-star-mini-shv-01-lhr8.facebook.com (157.240.221.35)  194.730 ms  193.402 ms
 \end{code}
-\end{enumerate}
 
-\subsection*{Hops Analysis}
+
+\subsection*{a. Hops Analysis}
 
 \begin{table}[!ht]
     \centering
     \begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
     \hline
-        ~ & google.com & Facebook.com & Utah.edu & iitd.ac.in & uct.ac.za  \\ \hline
-        Laptop & 10 & 12 & 34 & 4 & - \\ \hline
-        Buenos Aires & 14 & 12 & 21 & 18 & - \\ \hline
-        Johannesburg & 11 & 9 & 24 & 21 & -  \\ \hline
+        ~ & {\tt google.com} & {\tt facebook.com} & {\tt utah.edu} & {\tt iitd.ac.in} & {\tt uct.ac.za}  \\ \hline
+        \textbf{Laptop} & 10 & 12 & 34 & 4 & - \\ \hline
+        \textbf{Buenos Aires} & 14 & 12 & 21 & 18 & - \\ \hline
+        \textbf{Johannesburg} & 11 & 9 & 24 & 21 & -  \\ \hline
     \end{tabular}
 \end{table}
 
 A detailed analysis:-
 
 \begin{enumerate} [1.]
-\item Geographical distance vs number of Hops.\\
-Let's use utah.edu as the sample to study the trend.
-The distance between utah and the 3 traceruote sources vary as follows, Utah-Buenos Aires $\leq$ Utah-Delhi $\leq$ Utah-Johannesburg. 
-While it does take more hops to go from delhi to utah,than from Buenos Aires, it takes less hops to go from Johannesburg
-to utah than from Delhi. This shows that there might be some exceptions to the trend that it takes more hops for larger distances.\\
+\item \textbf{Geographical distance vs number of Hops}\\
+Let's use {\tt utah.edu} as the sample to study the trend.
+The distance between utah and the 3 traceruote sources vary as follows:
+\begin{center}Utah-Buenos Aires $<$ Utah-Delhi $<$ Utah-Johannesburg\end{center}
+While it does take more hops to go from Delhi to Utah, than from Buenos Aires, it takes less hops to go from Johannesburg
+to Utah than from Delhi. This shows that there might be some exceptions to the trend that it takes more hops for larger distances.
+
 Similarly for iitd.ac.in, the number of hops needed by local device (laptop) is 4, but Buenos Aires which is farther away from Delhi 
 than Johannesburg takes lesser number of hops than Johannesburg to reach IIT Delhi.
-This exception might arise because, the number of hops depends on the distance from source to destination along the path taken by fiber 
-optic cables. If the fiber optic cables do not take the geographically smallest route from source to destination then there might be a 
-difference in the geographical distance vs number of hops trend. For example if the connection from delhi to utah is routed throught 
-the atlantic than the pacific ocean then the geographical distance becomes larger from India to Utah than Johannesburg to Utah and then 
-it will start following the trend of larger geographical distance implying larger number of hops.
-In fact this hypothesis can be checked from the fact that the first US based server on the path (163.253.1.116) is actually located in 
+
+This exception might arise because, the number of hops depends on the geographical distance from source to destination along the path taken by fiber optic cables. If the fiber optic cables do not take the geographically smallest route from source to destination then there might be a difference in the geographical distance vs number of hops trend. For example, if the connection from Delhi to Utah is routed throught 
+the Atlantic than the Pacific ocean then the geographical distance becomes larger from India to Utah than Johannesburg to Utah and then it will start following the trend of larger geographical distance implying larger number of hops.
+
+Moreover, this hypothesis can be checked from the fact that the first US based server on the path (163.253.1.116) is actually located in 
 New York which suggests that the path taken is through the Atlantic.
-\item Number of hops to Google and Facebook.\\
+
+\item \textbf{Number of hops to Google and Facebook}\\
 In general, Google and Facebook seem to take fewer hops than other sites. Also the number of hops needed is almost constant and varies
 around 9-13. 
 The number of hops required for sites like iitd and utah vary a lot depending on traceroute server and depend on geographical distance
 as well.
 This might be because, google and facebook resolve to different IPs from different sources in order to ensure a smooth experience from
-any country. This results in low variability. On the other hand such a situation is not needed for universities like utah or iitd as 
+any country. This results in low variability. On the other hand such a situation is not needed for universities like Utah or IITD as 
 there is only one server for these institutes and they don't need to cater to too many requests from around the world. So the need 
 to optimise hops across the world is not high for these sites.
 \end{enumerate}
 
-\subsection*{Latency Analysis}
+\subsection*{b. Latency Analysis}
 
 
 \begin{table}[!ht]
@@ -487,13 +490,14 @@ to optimise hops across the world is not high for these sites.
 \end{table}
 
 
-In general the latency increases with number of hops, but for similar hop size, there might be some exceptions to the rule, for example 
-Latency for facebook in Buenos Aires and Johannesburg is more than that of Local device even though the number of hops is more for local device.
-(On performing traceroute from other sites with servers from the same cities,
-we got much less times around 2 ms for google and around 1 ms for facebook. It might be possible that the servers used by cogent co in these cities use some slower connections or have higher traffic due to which the latency is increased)
+In general the latency increases with number of hops, but for similar hop size, there might be some exceptions to the rule. For example latency for facebook in Buenos Aires and Johannesburg is more than that of Local device even though the number of hops is more for local device.
+
+On performing traceroute from other sites with servers from the same cities,
+we got much less times around 2 ms for google and around 1 ms for facebook. It might be possible that the servers used by cogent co in these cities use some slower connections or have higher traffic due to which the latency is increased.
+
 On the other hand,the latency seems to follow the trend of number of hops for universities like utah and iitd.
 
-\subsection*{Different IP addresses for same site}
+\subsection*{c. Different IP addresses for same site}
 
 The IP address of utah.edu and iitd.ac.in seems to remain the same irrespective of the location form where traceroute is requested.
 On the other hand, the IP address of google and facebook is different for every traceroute location that we chose.
@@ -505,13 +509,15 @@ For educational institutions, the requests are mostly from within the country. I
 performance across nations by maintaining multiple servers across the world. So, they have the same IP for multiple traceroute
 locations.
 
-\subsection*{ Path to different IP addresses}
+For iitd.ac.in, the IP address in 103.27.4.29 when accessed from external networks (like Johannesburg, Buenos Aires, and from Home networks in Delhi) and 10.10.211.212 when accessed from internal networks (like IIT Delhi Wifi). This is because the internal and external networks are different and have different IP addresses. It might be possible that educational institutions like IIT Delhi have different IP addresses for internal and external networks.
+
+\subsection*{d. Path to different IP addresses}
 
 The paths to different IP addresses for the same site gives longer path when request is made to an IP address obtained from a request 
 to a different country. 
 
-One possible reason for this can be that networks are optimised to ensure that people alwasy get access to the least latency path. So,
-the IP address to which the domain name corresponds to in our nation is the closest IP address (server) available to us.\\
+One possible reason for this can be that networks are optimised to ensure that people always get access to the least latency path. So,
+the IP address to which the domain name corresponds to in our nation is the least latency IP address (server) available to us.\\
 
 Path to facebook server in Argentina:-
 
@@ -528,6 +534,8 @@ traceroute to 157.240.12.35 (157.240.12.35), 64 hops max, 52 byte packets
  8  * * 10.255.238.254 (10.255.238.254)  64.307 ms
  9  10.152.7.214 (10.152.7.214)  60.612 ms
     10.152.7.38 (10.152.7.38)  33.859 ms  29.950 ms
+\end{code}
+\begin{code}
 10  ae1.pr01.bom1.tfbnw.net (157.240.68.238)  43.677 ms
     ae2.pr02.bom1.tfbnw.net (157.240.66.204)  111.273 ms  33.673 ms
 11  ae110.ar04.bom1.tfbnw.net (157.240.53.32)  47.238 ms
@@ -548,8 +556,6 @@ traceroute to 157.240.12.35 (157.240.12.35), 64 hops max, 52 byte packets
 16  ae203.bb04.vab1.tfbnw.net (129.134.40.15)  281.882 ms
     ae72.bb02.clt3.tfbnw.net (129.134.49.28)  312.436 ms
     ae203.bb04.vab1.tfbnw.net (129.134.40.15)  275.036 ms
-\end{code}
-\begin{code}
 17  ae68.bb04.clt3.tfbnw.net (129.134.103.32)  312.192 ms
     ae0.bb04.jax3.tfbnw.net (129.134.43.239)  353.491 ms  409.257 ms
 18  ae0.bb04.jax3.tfbnw.net (129.134.43.239)  425.756 ms  416.653 ms *
@@ -591,6 +597,8 @@ traceroute to 157.240.221.35 (157.240.221.35), 64 hops max, 52 byte packets
 12  * * *
 13  * * *
 14  * * *
+\end{code}
+\begin{code}
 15  * * *
 16  * po141.asw01.lhr3.tfbnw.net (129.134.45.56)  146.154 ms *
 17  po141.asw02.lhr3.tfbnw.net (129.134.45.58)  156.654 ms
@@ -615,27 +623,25 @@ Clearly both latency and number of hops are much larger than the corresponding v
         
     \end{tabular}
 \end{table}
-\subsection*{Peering with Google and Facebook}
+\subsection*{e. Peering with Google and Facebook}
 
 For most countries, Google's network seems to be peered to the local ISP. However, on tracerouting for google and facebook from a 
 server in Beijing, no response in received after 20 hops and it seems like the packet is dropped. It is possible that China's local 
 ISPs are not peered with Google's network.
 
-On running traceroute from Luxembourg, we find that the path taken goes through Germany before entering Google's network in Germany.
+On running traceroute from Luxembourg, we find that the path taken goes through Germany before entering Google's network in Germany. (ae61-101.edge6.Dusseldorf1.Level3.net (62.67.22.45))
 This makes sense as Luxembourg is a small nation with a small population which makes it more optimal for it to connect to Germany's 
 ISPs and use Google's network there instead of setting up a peering point for itself.
 
-Similarly on running traceroute to Google from Bahrain, we find that the connection jumps from Manama, Bahrain to  an Amazon Data 
-center in US but not one of Google. 
+Similarly on running traceroute to Google from Bahrain (99.83.93.23), we find that the connection jumps from Manama, Bahrain to  an Amazon Data center in US but not one of Google. 
 
 Similarly for facebook too, Bahrain uses an Amazon Data center to reach US and then changes to Google's network.
 
-On running traceroute from Lagos, the route taken is through the West Indian Ocean Cable Company to the facebook servers in US. The 
-local ISP is not peered to facebook. 
+On running traceroute from Lagos, the route taken is through the West Indian Ocean Cable Company (154.66.247.85 WIOCC-AS, MU) to the facebook servers in US. The local ISP is not peered to facebook. 
 
-
+The traceroutes have been attached in a separate folder called "Peering Experiments".
+\clearpage
 \subsection*{ASIP Analysis}
-\subsubsection*{Path from Laptop (Hostel wifi) to utah.edu}
 \begin{table}[!ht]
     \centering
 \footnotesize
@@ -676,8 +682,9 @@ local ISP is not peered to facebook.
 33  172.31.241.25 (172.31.241.25)                                           & PRIVATE                                                                         \\ \hline
 34  www.utah.edu (155.98.186.21)                                            & UTAH                                                                            \\ \hline
 \end{tabular}
+\caption{Path from Laptop (Hostel wifi) to utah.edu}
 \end{table}
-\subsubsection*{Path from Laptop (Hostel wifi) to facebook}
+
 \begin{table}[!ht]
     \centering
 \begin{tabular}{|l|l|}
@@ -696,8 +703,9 @@ local ISP is not peered to facebook.
 11  po101.psw04.bom1.tfbnw.net (157.240.44.31)                              & Facebook               \\ \hline
 12  157.240.38.65 (157.240.38.65)                                           & Facebook\\ \hline
 \end{tabular}
+\caption{Path from Laptop (Hostel wifi) to facebook}
 \end{table}
-\subsubsection*{Path from Laptop (Hostel wifi) to iitd.ac.in}
+
 \begin{table}[!ht]
     \centering
 \begin{tabular}{|l|l|}
@@ -708,8 +716,8 @@ local ISP is not peered to facebook.
 3  10.254.236.6 (10.254.236.6)                                              & Private                                                               \\ \hline
 4  www.iitd.ac.in (10.10.211.212)                                           & Private\\ \hline
 \end{tabular}
+\caption{Path from Laptop (Hostel wifi) to iitd.ac.in}
 \end{table}
-\subsubsection*{Path from Laptop (Hostel wifi) to google}
 \begin{table}[!ht]
     \centering
 \begin{tabular}{|l|l|}
@@ -726,8 +734,9 @@ local ISP is not peered to facebook.
 9  142.251.52.217 (142.251.52.217)                                          & Google                 \\ \hline
 10  del12s08-in-f14.1e100.net (142.250.194.238)                             & Google  \\ \hline
 \end{tabular}
+\caption{Path from Laptop (Hostel wifi) to iitd.ac.in}
+
 \end{table}
-\subsubsection*{Path from Laptop (Hostel wifi) to uct.ac.za}
 \begin{table}[!ht]
       \centering
 \begin{tabular}{|l|l|}
@@ -740,18 +749,19 @@ local ISP is not peered to facebook.
 5  * * *                                                     & -                                                            \\ \hline
 6  10.1.207.65 (10.1.207.65)                                 & Private                                                      \\ \hline
 7  10.1.200.137 (10.1.200.137)                               & Private                                                      \\ \hline
-8  10.255.238.122 (10.255.238.122)                           & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} Private}       \\ \hline
-9  180.149.48.18 (180.149.48.18)                             & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} NKN-CORE-NW}   \\ \hline
-10  180.149.48.2 (180.149.48.2)                              & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} NKN-CORE-NW}   \\ \hline
-11  xe-0-0-2-0-600-ams1-ir1.net.tenet.ac.za (155.232.220.18) & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} TENET-1}       \\ \hline
-12  xe-0-0-1-1-10-mtz1-ir1.net.tenet.ac.za (155.232.1.21)    & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} TENET-1}       \\ \hline
-13  xe-0-0-1-1-10-mtz1-ir1.net.tenet.ac.za (155.232.1.21)    & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} TENET-1}       \\ \hline
-14  et-1-1-1-0-isd1-pe1.net.tenet.ac.za (155.232.1.153)      & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} TENET-1}       \\ \hline
-15  et-1-1-4-0-cpt3-pe1.net.tenet.ac.za (155.232.1.148)      & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} TENET-1}       \\ \hline
-16  154.114.124.1 (154.114.124.1)                            & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} TENET-1}       \\ \hline
-17  * 154.114.124.1 (154.114.124.1)                          & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} TENET-1}       \\ \hline
-18  * * *                                                    & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} -}             \\ \hline
-19  * * *                                                    & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} -}             \\ \hline
-20  * * *                                                    & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} -}             \\ \hline
+8  10.255.238.122 (10.255.238.122)                           & Private       \\ \hline
+9  180.149.48.18 (180.149.48.18)                             & NKN-CORE-NW   \\ \hline
+10  180.149.48.2 (180.149.48.2)                              & NKN-CORE-NW   \\ \hline
+11  xe-0-0-2-0-600-ams1-ir1.net.tenet.ac.za (155.232.220.18) & TENET-1       \\ \hline
+12  xe-0-0-1-1-10-mtz1-ir1.net.tenet.ac.za (155.232.1.21)    & TENET-1       \\ \hline
+13  xe-0-0-1-1-10-mtz1-ir1.net.tenet.ac.za (155.232.1.21)    & TENET-1       \\ \hline
+14  et-1-1-1-0-isd1-pe1.net.tenet.ac.za (155.232.1.153)      & TENET-1       \\ \hline
+15  et-1-1-4-0-cpt3-pe1.net.tenet.ac.za (155.232.1.148)      & TENET-1       \\ \hline
+16  154.114.124.1 (154.114.124.1)                            & TENET-1       \\ \hline
+17  * 154.114.124.1 (154.114.124.1)                          & TENET-1       \\ \hline
+18  * * *                                                    & -             \\ \hline
+19  * * *                                                    & -             \\ \hline
+20  * * *                                                    & -             \\ \hline
 \end{tabular}
+\caption{Path from Laptop (Hostel wifi) to uct.ac.za}
 \end{table}
