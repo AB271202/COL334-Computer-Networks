@@ -21,7 +21,51 @@ traceroute to google.com (142.250.194.238), 64 hops max, 52 byte packets
  9  142.251.52.217 (142.251.52.217)  6.274 ms  6.749 ms  6.689 ms
 10  del12s08-in-f14.1e100.net (142.250.194.238)  6.588 ms  6.423 ms  6.608 ms
 \end{code}
-
+\item Here is the route to {\tt www.uct.ac.za}
+\begin{code}
+traceroute to cms-vip-prd.uct.ac.za (137.158.159.192), 64 hops max, 52 byte packets
+ 1  10.184.0.13 (10.184.0.13)  22.724 ms  10.579 ms  12.871 ms
+ 2  10.254.175.5 (10.254.175.5)  17.468 ms
+    10.254.175.1 (10.254.175.1)  14.286 ms  10.934 ms
+ 3  10.255.1.34 (10.255.1.34)  12.039 ms  5.280 ms  4.924 ms
+ 4  10.119.233.65 (10.119.233.65)  4.448 ms  10.977 ms  10.331 ms
+ 5  * * *
+ 6  10.1.207.65 (10.1.207.65)  30.769 ms  31.445 ms  29.155 ms
+ 7  10.1.200.137 (10.1.200.137)  28.082 ms  28.558 ms  27.255 ms
+ 8  10.255.238.122 (10.255.238.122)  32.098 ms
+    10.255.238.254 (10.255.238.254)  33.832 ms
+    10.255.238.122 (10.255.238.122)  33.503 ms
+ 9  180.149.48.18 (180.149.48.18)  28.309 ms  28.897 ms  28.542 ms
+10  180.149.48.2 (180.149.48.2)  167.262 ms  166.161 ms
+    180.149.48.6 (180.149.48.6)  181.931 ms
+11  xe-0-0-2-0-600-ams1-ir1.net.tenet.ac.za (155.232.220.18)  199.348 ms  205.185 ms  200.641 ms
+12  xe-0-0-1-1-10-mtz1-ir1.net.tenet.ac.za (155.232.1.21)  353.265 ms
+    xe-0-0-2-0-600-ams1-ir1.net.tenet.ac.za (155.232.220.18)  218.119 ms  198.841 ms
+13  xe-0-0-1-1-10-mtz1-ir1.net.tenet.ac.za (155.232.1.21)  402.440 ms  512.822 ms
+    et-1-1-1-0-isd1-pe1.net.tenet.ac.za (155.232.1.153)  405.517 ms
+14  et-1-1-1-0-isd1-pe1.net.tenet.ac.za (155.232.1.153)  411.163 ms
+    et-1-1-4-0-cpt3-pe1.net.tenet.ac.za (155.232.1.148)  402.903 ms  407.985 ms
+15  et-1-1-4-0-cpt3-pe1.net.tenet.ac.za (155.232.1.148)  409.552 ms
+    et-0-0-1-0-cpt7-pe1.net.tenet.ac.za (155.232.64.70)  365.084 ms
+    et-1-1-4-0-cpt3-pe1.net.tenet.ac.za (155.232.1.148)  400.673 ms
+16  154.114.124.1 (154.114.124.1)  553.086 ms
+    et-0-0-1-0-cpt7-pe1.net.tenet.ac.za (155.232.64.70)  412.126 ms
+    154.114.124.1 (154.114.124.1)  406.682 ms
+17  * 154.114.124.1 (154.114.124.1)  522.107 ms *
+18  * * *
+19  * * *
+20  * * *
+21  * * *
+22  * * *
+23  * * *
+24  * * *
+25  * * *
+26  * * *
+27  * * *
+28  * * *
+29  * * *
+30  * * *
+\end{code}
 \item Here is the route to {\tt www.iitd.ac.in}
 \begin{code}
 Ankits-MacBook-Air-6:~ ankitmondal traceroute www.iitd.ac.in
@@ -409,7 +453,14 @@ The distance between utah and the 3 traceruote sources vary as follows, Utah-Bue
 While it does take more hops to go from delhi to utah,than from Buenos Aires, it takes less hops to go from Johannesburg
 to utah than from Delhi. This shows that there might be some exceptions to the trend that it takes more hops for larger distances.\\
 Similarly for iitd.ac.in, the number of hops needed by local device (laptop) is 4, but Buenos Aires which is farther away from Delhi 
-than Johannesburg takes lesser number of hops than Johannesburg.
+than Johannesburg takes lesser number of hops than Johannesburg to reach IIT Delhi.
+This exception might arise because, the number of hops depends on the distance from source to destination along the path taken by fiber 
+optic cables. If the fiber optic cables do not take the geographically smallest route from source to destination then there might be a 
+difference in the geographical distance vs number of hops trend. For example if the connection from delhi to utah is routed throught 
+the atlantic than the pacific ocean then the geographical distance becomes larger from India to Utah than Johannesburg to Utah and then 
+it will start following the trend of larger geographical distance implying larger number of hops.
+In fact this hypothesis can be checked from the fact that the first US based server on the path (163.253.1.116) is actually located in 
+New York which suggests that the path taken is through the Atlantic.
 \item Number of hops to Google and Facebook.\\
 In general, Google and Facebook seem to take fewer hops than other sites. Also the number of hops needed is almost constant and varies
 around 9-13. 
@@ -570,8 +621,21 @@ For most countries, Google's network seems to be peered to the local ISP. Howeve
 server in Beijing, no response in received after 20 hops and it seems like the packet is dropped. It is possible that China's local 
 ISPs are not peered with Google's network.
 
-\subsection*{ASIP Analysis}
+On running traceroute from Luxembourg, we find that the path taken goes through Germany before entering Google's network in Germany.
+This makes sense as Luxembourg is a small nation with a small population which makes it more optimal for it to connect to Germany's 
+ISPs and use Google's network there instead of setting up a peering point for itself.
 
+Similarly on running traceroute to Google from Bahrain, we find that the connection jumps from Manama, Bahrain to  an Amazon Data 
+center in US but not one of Google. 
+
+Similarly for facebook too, Bahrain uses an Amazon Data center to reach US and then changes to Google's network.
+
+On running traceroute from Lagos, the route taken is through the West Indian Ocean Cable Company to the facebook servers in US. The 
+local ISP is not peered to facebook. 
+
+
+\subsection*{ASIP Analysis}
+\subsubsection*{Path from Laptop (Hostel wifi) to utah.edu}
 \begin{table}[!ht]
     \centering
 \footnotesize
@@ -613,7 +677,7 @@ ISPs are not peered with Google's network.
 34  www.utah.edu (155.98.186.21)                                            & UTAH                                                                            \\ \hline
 \end{tabular}
 \end{table}
-
+\subsubsection*{Path from Laptop (Hostel wifi) to facebook}
 \begin{table}[!ht]
     \centering
 \begin{tabular}{|l|l|}
@@ -633,7 +697,7 @@ ISPs are not peered with Google's network.
 12  157.240.38.65 (157.240.38.65)                                           & Facebook\\ \hline
 \end{tabular}
 \end{table}
-
+\subsubsection*{Path from Laptop (Hostel wifi) to iitd.ac.in}
 \begin{table}[!ht]
     \centering
 \begin{tabular}{|l|l|}
@@ -645,7 +709,7 @@ ISPs are not peered with Google's network.
 4  www.iitd.ac.in (10.10.211.212)                                           & Private\\ \hline
 \end{tabular}
 \end{table}
-
+\subsubsection*{Path from Laptop (Hostel wifi) to google}
 \begin{table}[!ht]
     \centering
 \begin{tabular}{|l|l|}
@@ -661,5 +725,33 @@ ISPs are not peered with Google's network.
 8  108.170.251.113                                                          & Google                 \\ \hline
 9  142.251.52.217 (142.251.52.217)                                          & Google                 \\ \hline
 10  del12s08-in-f14.1e100.net (142.250.194.238)                             & Google  \\ \hline
+\end{tabular}
+\end{table}
+\subsubsection*{Path from Laptop (Hostel wifi) to uct.ac.za}
+\begin{table}[!ht]
+      \centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{IP Address}                                          & \textbf{ASN}                                                 \\ \hline
+1  10.184.0.13 (10.184.0.13)                                 & Private                                                      \\ \hline
+2  10.254.175.5 (10.254.175.5)                               & Private                                                      \\ \hline
+3  10.255.1.34 (10.255.1.34)                                 & Private                                                      \\ \hline
+4  10.119.233.65 (10.119.233.65)                             & Private                                                      \\ \hline
+5  * * *                                                     & -                                                            \\ \hline
+6  10.1.207.65 (10.1.207.65)                                 & Private                                                      \\ \hline
+7  10.1.200.137 (10.1.200.137)                               & Private                                                      \\ \hline
+8  10.255.238.122 (10.255.238.122)                           & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} Private}       \\ \hline
+9  180.149.48.18 (180.149.48.18)                             & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} NKN-CORE-NW}   \\ \hline
+10  180.149.48.2 (180.149.48.2)                              & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} NKN-CORE-NW}   \\ \hline
+11  xe-0-0-2-0-600-ams1-ir1.net.tenet.ac.za (155.232.220.18) & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} TENET-1}       \\ \hline
+12  xe-0-0-1-1-10-mtz1-ir1.net.tenet.ac.za (155.232.1.21)    & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} TENET-1}       \\ \hline
+13  xe-0-0-1-1-10-mtz1-ir1.net.tenet.ac.za (155.232.1.21)    & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} TENET-1}       \\ \hline
+14  et-1-1-1-0-isd1-pe1.net.tenet.ac.za (155.232.1.153)      & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} TENET-1}       \\ \hline
+15  et-1-1-4-0-cpt3-pe1.net.tenet.ac.za (155.232.1.148)      & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} TENET-1}       \\ \hline
+16  154.114.124.1 (154.114.124.1)                            & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} TENET-1}       \\ \hline
+17  * 154.114.124.1 (154.114.124.1)                          & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} TENET-1}       \\ \hline
+18  * * *                                                    & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} -}             \\ \hline
+19  * * *                                                    & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} -}             \\ \hline
+20  * * *                                                    & \cellcolor[HTML]{F6F6F6}{\color[HTML]{5D5D5D} -}             \\ \hline
 \end{tabular}
 \end{table}
