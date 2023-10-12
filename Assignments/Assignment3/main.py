@@ -47,11 +47,11 @@ s = 0
 ans = ""
 flag = True
 k = 56
-while (flag and s<=876000):
+while (flag and s<=211000):
     for i in range(k):
         message = f"Offset: {s}\nNumBytes: 1000\n\n"
         client.sendto(message.encode(),(SNAME,SPORT))
-        if(s>876000):
+        if(s>211000):
             break
         print("Message sent to server",s)
         wait = True
@@ -70,16 +70,21 @@ while (flag and s<=876000):
                 # print("wait")
         # print(resp)
         if ("Squished" in resp):
+            print("Squished")
             flag = False
             break
         else:
             fields = resp.split("\n")
-            ans+=fields[3]
+            for i in range(3,len(fields)):
+                if (i==len(fields)-1):
+                    ans+=fields[i]
+                else:
+                    ans+=fields[i]+"\n"
             if (s>876000):
                 flag = False
                 break
             s+=1000
-    time.sleep(0.0001)
+    time.sleep(0.001)
     if flag:
         k += 1
     else:
