@@ -1,5 +1,16 @@
 import time
 from socket import *
+import hashlib
+
+def calculate_md5(filename):
+    md5_hash = hashlib.md5()
+    with open(filename, "r") as file:
+        while True:
+            data = file.read(8192)  # Read the file in 8KB chunks
+            if not data:
+                break
+            md5_hash.update(data.encode())
+    return md5_hash.hexdigest()
 
 SNAME = "localhost"
 SPORT=9801
@@ -11,43 +22,17 @@ for i in range(0,1):
     client.sendto(message.encode(),(SNAME,SPORT))
     print("Message sent to server")
 data,addr=client.recvfrom(2048)
+size=int(data.split()[1])
 print(data.decode())
 flag = True
 k = 1
 message = f"Offset: 0\nNumBytes: 10\n\n"
-# while (flag):
-#     for i in range(k):
-#         client.sendto(message.encode(),(SNAME,SPORT))
-#         print("Message sent to server",k)
-#         wait = True
-#         resp = ""
-#         while(wait):
-#             # print("back here")
-#             try:
-#                 # print("going here")
-#                 wait = False
-#                 data,addr=client.recvfrom(2048)
-#                 resp = data.decode()
-#                 print("recv")
-#             except:
-#                 wait = True
-#                 client.sendto(message.encode(),(SNAME,SPORT))
-#                 # print("wait")
-#         print(resp)
-#         if ("Squished" in resp):
-#             flag = False
-#             break
-#     time.sleep(0.0001)
-#     if flag:
-#         k+=1
-#     else:
-#         break
-# print("Determined rate",k-1)
+
 s = 0
 ans = ""
 flag = True
 k = 56
-while (flag and s<=211000):
+while (flag and s<=size):
     for i in range(k):
         message = f"Offset: {s}\nNumBytes: 1000\n\n"
         client.sendto(message.encode(),(SNAME,SPORT))
@@ -89,10 +74,20 @@ while (flag and s<=211000):
         k += 1
     else:
         # break
-        if (s>876000):
+        if (s>size):
             break
         k = max(2,k-10)
         flag  = True
-client.close()
+# client.close()
 f = open("filerecv.txt","w")
 f.write(ans)
+
+md5_hex = calculate_md5("filerecv.txt")
+
+print("MD5 Hash of the file:", md5_hex)
+message = f"Submit: 2021CS10134@teamname\nMD5: 6bf11f1400185696a3a43a495987756d\n\n"
+client.sendto(message.encode(), (SNAME, SPORT))
+
+msg,addr = client.recvfrom(2048)
+print(msg.decode())
+client.close()
