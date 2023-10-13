@@ -2,6 +2,8 @@ import hashlib
 import time
 from socket import *
 
+SNAME = "localhost"
+SPORT=9801
 
 def calculate_md5(filename):
     md5_hash = hashlib.md5()
@@ -13,8 +15,7 @@ def calculate_md5(filename):
             md5_hash.update(data.encode())
     return md5_hash.hexdigest()
 
-SNAME = "localhost"
-SPORT=9801
+
 client=socket(AF_INET, SOCK_DGRAM)
 message="SendSize\nReset\n\n"
 client.settimeout(0.05)
@@ -63,12 +64,6 @@ while (flag and s<=size):
             # print("Squished")
             flag = False
             fields = resp.split("\n")
-            # print(resp)
-            # print(hashlib.md5(resp).hexdigest())
-            # print(hashlib.md5("This is a string").hexdigest())
-            # print(hashlib.md5("This is a string".encode('utf-8')).hexdigest())
-            # print(hashlib.md5(resp.encode('utf-8')).hexdigest())
-            # print(fields)
             for i in range(4,len(fields)):
                 if (fields[i] == '\x00'):
                     continue
@@ -83,12 +78,6 @@ while (flag and s<=size):
             break
         else:
             fields = resp.split("\n")
-            # print(resp)
-            # print(hashlib.md5(resp).hexdigest())
-            # print(hashlib.md5("This is a string").hexdigest())
-            # print(hashlib.md5("This is a string".encode('utf-8')).hexdigest())
-            # print(hashlib.md5(resp.encode('utf-8')).hexdigest())
-            # print(fields)
             for i in range(3,len(fields)):
                 if (fields[i] == '\x00'):
                     continue

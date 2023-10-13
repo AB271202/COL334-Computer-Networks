@@ -33,10 +33,8 @@ SPORT=9801
 client=socket(AF_INET, SOCK_DGRAM)
 message="SendSize\nReset\n\n"
 client.settimeout(0.05)
-# message = f"Offset: 0\nNumBytes: 10\n\n"
-for i in range(0,1):
-    client.sendto(message.encode(),(SNAME,SPORT))
-    print("Message sent to server")
+
+client.sendto(message.encode(),(SNAME,SPORT))
 data,addr=client.recvfrom(2048*2048)
 size=int(data.split()[1])
 print(data.decode())
