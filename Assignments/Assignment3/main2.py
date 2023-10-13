@@ -33,7 +33,10 @@ s = 0
 ans = ""
 flag = True
 k = 10
-while (flag and s<=size):
+received_list = [""]*(size//1440)
+count = size//1440
+while (flag and count > 0):
+    # if 
     for i in range(k):
         message = f"Offset: {s}\nNumBytes: 1440\n\n"
         if(s>size):
@@ -43,22 +46,24 @@ while (flag and s<=size):
         wait = True
         resp = ""
         waitflag = False
-        while(wait):
+        # while(wait):
             # print("back here")
-            try:
-                # print("going here")
-                wait = False
-                data,addr=client.recvfrom(2048*2048)
-                resp = data.decode()
-                # print("recv")
-            except:
-                wait = True
-                waitflag = True
-                client.sendto(message.encode(),(SNAME,SPORT))
-                # print("wait")
+        try:
+            # print("going here")
+            wait = False
+            data,addr=client.recvfrom(2048*2048)
+            resp = data.decode()
+            # print("recv")
+        except:
+            wait = True
+            waitflag = True
+            # client.sendto(message.encode(),(SNAME,SPORT))
+            # print("wait")
         # print(resp)
         if waitflag:
             k = max(2,k-10)
+        if not wait:
+            count -= 1
         if ("Squished" in resp):
             # print("Squished")
             flag = False
@@ -69,6 +74,7 @@ while (flag and s<=size):
             # print(hashlib.md5("This is a string".encode('utf-8')).hexdigest())
             # print(hashlib.md5(resp.encode('utf-8')).hexdigest())
             # print(fields)
+            ans = ""
             for i in range(4,len(fields)):
                 if (fields[i] == '\x00'):
                     continue
@@ -76,12 +82,13 @@ while (flag and s<=size):
                     ans+=fields[i]
                 else:
                     ans+=fields[i]+"\n"
+            received_list[s//1440] = ans
             if (s>size):
                 flag = False
                 break
             s+=1440
             break
-        else:
+        elif not wait:
             fields = resp.split("\n")
             # print(resp)
             # print(hashlib.md5(resp).hexdigest())
@@ -89,6 +96,7 @@ while (flag and s<=size):
             # print(hashlib.md5("This is a string".encode('utf-8')).hexdigest())
             # print(hashlib.md5(resp.encode('utf-8')).hexdigest())
             # print(fields)
+            ans = ""
             for i in range(3,len(fields)):
                 if (fields[i] == '\x00'):
                     continue
@@ -96,6 +104,7 @@ while (flag and s<=size):
                     ans+=fields[i]
                 else:
                     ans+=fields[i]+"\n"
+            received_list[s//1440] = ans
             if (s>size):
                 flag = False
                 break
