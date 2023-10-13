@@ -36,11 +36,10 @@ k = 10
 received_list = [""]*(size//1440)
 count = size//1440
 while (flag and count > 0):
-    # if 
     for i in range(k):
         message = f"Offset: {s}\nNumBytes: 1440\n\n"
-        if(s>size):
-            break
+        # if(s>size):
+        #     break
         client.sendto(message.encode(),(SNAME,SPORT))
         print("Message sent to server",s)
         wait = True
@@ -85,8 +84,23 @@ while (flag and count > 0):
             received_list[s//1440] = ans
             if (s>size):
                 flag = False
+                s = 0
+                # break
+            found = False
+            for i in range(s//1440,len(received_list)):
+                if received_list[i]=="":
+                    s = i*1440
+                    found = True
+            if not found:
+                s = 0
+                for i in range(s//1440,len(received_list)):
+                    if received_list[i]=="":
+                        s = i*1440
+                        found = True
+            if not found:
+                flag = False
                 break
-            s+=1440
+            # s+=1440
             break
         elif not wait:
             fields = resp.split("\n")
@@ -105,17 +119,46 @@ while (flag and count > 0):
                 else:
                     ans+=fields[i]+"\n"
             received_list[s//1440] = ans
-            if (s>size):
+            # if (s>size):
+            #     flag = False
+            #     break
+            # s+=1440
+            found = False
+            for i in range(s//1440,len(received_list)):
+                if received_list[i]=="":
+                    s = i*1440
+                    found = True
+            if not found:
+                s = 0
+                for i in range(s//1440,len(received_list)):
+                    if received_list[i]=="":
+                        s = i*1440
+                        found = True
+            if not found:
                 flag = False
                 break
-            s+=1440
+        else:
+            found = False
+            for i in range(s//1440+1,len(received_list)):
+                if received_list[i]=="":
+                    s = i*1440
+                    found = True
+            if not found:
+                s = 0
+                for i in range(s//1440,len(received_list)):
+                    if received_list[i]=="":
+                        s = i*1440
+                        found = True
+            if not found:
+                flag = False
+                break
     time.sleep(0.01)
     if flag:
         k += 1
     else:
         # break
-        if (s>size):
-            break
+        # if (s>size):
+        #     break
         # k = max(2,k-10)
         flag  = True
 # client.close()
@@ -126,6 +169,11 @@ ans2 = ans
 # for i in range(len(ans)-1,-1,-1):
 #     if ans[i] == "\n":
 #         ans2 = ans[:i+1]
+ans = ""
+for i in received_list:
+    ans+=i
+f.write(ans)
+print(received_list)
 md5_hex = calculate_md5("filerecv.txt")
 print(hashlib.md5(ans2.encode('utf-8')).hexdigest())
 md5_hex = hashlib.md5(ans.encode('utf-8')).hexdigest()
