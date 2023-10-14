@@ -2,45 +2,34 @@ import hashlib
 import time
 from socket import *
 
-
-def calculate_md5(filename):
-    md5_hash = hashlib.md5()
-    with open(filename, "r") as file:
-        while True:
-            data = file.read(8192)  # Read the file in 8KB chunks
-            if not data:
-                break
-            md5_hash.update(data.encode())
-    return md5_hash.hexdigest()
-
+# SNAME = "10.194.49.169"
+SNAME = "localhost"
+SPORT=9801
+PSIZE=1440
 
 def next(s,receivedlist):
-    curr_index = s//1440
+    curr_index = s//PSIZE
     found = False
     for i in range(curr_index,len(receivedlist)):
         if receivedlist[i]=="#":
             found = True
-            return i*1440
+            return i*PSIZE
     if not found:
         for i in range(0,len(receivedlist)):
             if receivedlist[i]=="#":
                 found = True
-                return i*1440
+                return i*PSIZE
     return 0
 
-# SNAME = "10.194.49.169"
-SNAME = gethostbyname("vayu.iitd.ac.in")
-SPORT=9802
+
 client=socket(AF_INET, SOCK_DGRAM)
-message="SendSize\nReset\n\n"
 client.settimeout(0.006)
-# message = f"Offset: 0\nNumBytes: 10\n\n"
-# for i in range(0,1):
-wait = True
+
+message="SendSize\nReset\n\n"
 client.sendto(message.encode(),(SNAME,SPORT))
-print("Message sent to server")
+
+wait = True
 while(wait):
-            # print("back here")
     try:
         data,addr=client.recvfrom(2048*2048)
         wait = False
@@ -48,24 +37,19 @@ while(wait):
         pass
 size=int(data.split()[1])
 print(data.decode())
-flag = True
-k = 1
-message = f"Offset: 0\nNumBytes: 10\n\n"
 
 s = 0
 ans = ""
 flag = True
 k = 10
-count = size//1440 + 1
+count = size//PSIZE + 1
 receivedlist = ["#"]*(count)
 while (flag and count>0):
-    for i in range(size//1440 + 1):
-        # if (count<=0):
-        #     break
+    for i in range(size//PSIZE + 1):
         if (receivedlist[i]!="#"):
             continue
-        s = i*1440
-        message = f"Offset: {s}\nNumBytes: 1440\n\n"
+        s = i*PSIZE
+        message = f"Offset: {s}\nNumBytes: {PSIZE}\n\n"
         client.sendto(message.encode(),(SNAME,SPORT))
         print("Message sent to server",s)
         resp = ""
@@ -77,9 +61,7 @@ while (flag and count>0):
         except:
             received = False
         if received:
-            # print(resp)
             if ("Squished" in resp):
-                # print("Squished")
                 fields = resp.split("\n")
                 ans = ""
                 for i in range(4,len(fields)):
@@ -91,13 +73,10 @@ while (flag and count>0):
                         ans+=fields[i]+"\n"
                 offset = fields[0]
                 offsetnum = int(offset.split()[1])
-                if receivedlist[offsetnum//1440] == "#":
+                if receivedlist[offsetnum//PSIZE] == "#":
                     count-=1
-                receivedlist[offsetnum//1440]=ans
+                receivedlist[offsetnum//PSIZE]=ans
 
-                # s+=1440
-                # count -=1
-                # s = next(s,receivedlist)
             else:
                 ans = ""
                 fields = resp.split("\n")
@@ -108,47 +87,25 @@ while (flag and count>0):
                         ans+=fields[i]
                     else:
                         ans+=fields[i]+"\n"
-                # receivedlist[s//1440]=ans
                 offset = fields[0]
                 offsetnum = int(offset.split()[1])
-                if receivedlist[offsetnum//1440] == "#":
+                if receivedlist[offsetnum//PSIZE] == "#":
                     count-=1
-                receivedlist[offsetnum//1440]=ans
-                # s+=1440
-                # count-=1
-                # s = next(s,receivedlist)
+                receivedlist[offsetnum//PSIZE]=ans
             if (count%1 == 0):
                 time.sleep(0.007)
     time.sleep(0.02)
-# client.close()
-# f = open("filerecv.txt","w")
-# f.write(ans)
 ans2 = ""
 ans2 = ans
-# for i in range(len(ans)-1,-1,-1):
-#     if ans[i] == "\n":
-#         ans2 = ans[:i+1]
-# print(receivedlist[0])
 ans  = ""
-for i in range(size//1440+1):
+for i in range(size//PSIZE+1):
     ans+=receivedlist[i]
-    # print("ans",i)
-    # print(ans)
-# f.write(ans)
-md5_hex = calculate_md5("filerecv.txt")
-# print(hashlib.md5(ans2.encode('utf-8')).hexdigest())
-# print(ans2)
-# print("Current answer\n",ans)
+
 md5_hex = hashlib.md5(ans.encode('utf-8')).hexdigest()
 print("MD5 Hash of the file:", md5_hex)
 message = f"Submit: 2021CS10134@teamname\nMD5: {md5_hex}\n\n"
 client.sendto(message.encode(), (SNAME, SPORT))
 
-# msg,addr = client.recvfrom(2048)
-# print(msg.decode())
-# print("MD5 Hash of the file:", md5_hex)
-# message = f"Submit: 2021CS10134@teamname\nMD5: {md5_hex}\n\n"
-# client.sendto(message.encode(), (SNAME, SPORT))
 
 msg1 = ""
 while(not ("Result" in msg1 )):
@@ -159,7 +116,7 @@ while(not ("Result" in msg1 )):
             wait = False
         except:
             pass
-    # msg,addr = client.recvfrom(2048)
     msg1 = msg.decode()
+
 print(msg.decode())
 client.close()

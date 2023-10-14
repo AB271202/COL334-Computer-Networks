@@ -23,9 +23,9 @@ def next(s, receivedlist):
 
 
 client = socket(AF_INET, SOCK_DGRAM)
-message = "SendSize\nReset\n\n"
 client.settimeout(0.1)
 
+message = "SendSize\nReset\n\n"
 client.sendto(message.encode(), (SNAME, SPORT))
 data, addr = client.recvfrom(2048*2048)
 size = int(data.split()[1])
