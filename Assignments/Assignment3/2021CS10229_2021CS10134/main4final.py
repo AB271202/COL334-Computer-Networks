@@ -1,9 +1,8 @@
 import hashlib
 import time
 from socket import *
-from matplotlib import pyplot as plt
 
-# SNAME = "10.194.49.169"
+
 SNAME = "localhost"
 SPORT = 9801
 PSIZE = 1440
@@ -40,7 +39,6 @@ while (wait):
         pass
 size = int(data.split()[1])
 print(data.decode())
-offsetlist = []
 sendtimelist = []
 receivetimelist = []
 s = 0
@@ -137,5 +135,5 @@ with open("sendtime.txt", "w") as f:
         f.write(f"[{i[0]},{i[1]}],")
 
 with open("receivetime.txt", "w") as f:
-    for i in sendtimelist:
+    for i in receivetimelist:
         f.write(f"[{i[0]},{i[1]}],")

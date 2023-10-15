@@ -15,31 +15,33 @@ def calculate_md5(filename):
             md5_hash.update(data.encode())
     return md5_hash.hexdigest()
 
+sendtimelist=[]
+receivetimelist=[]
 
 client=socket(AF_INET, SOCK_DGRAM)
 message="SendSize\nReset\n\n"
 client.settimeout(0.05)
 # message = f"Offset: 0\nNumBytes: 10\n\n"
-for i in range(0,1):
-    client.sendto(message.encode(),(SNAME,SPORT))
-    print("Message sent to server")
+
+client.sendto(message.encode(),(SNAME,SPORT))
+print("Message sent to server")
 data,addr=client.recvfrom(2048*2048)
 size=int(data.split()[1])
 print(data.decode())
-flag = True
-k = 1
-message = f"Offset: 0\nNumBytes: 10\n\n"
+
 
 s = 0
 ans = ""
 flag = True
-k = 10
+k = 2
+initial_time=time.time()
 while (flag and s<=size):
     for i in range(k):
         message = f"Offset: {s}\nNumBytes: 1440\n\n"
         if(s>size):
             break
         client.sendto(message.encode(),(SNAME,SPORT))
+        sendtimelist.append([time.time()-initial_time, s])
         print("Message sent to server",s)
         wait = True
         resp = ""
@@ -58,12 +60,16 @@ while (flag and s<=size):
                 client.sendto(message.encode(),(SNAME,SPORT))
                 # print("wait")
         # print(resp)
+        recvtime=time.time()-initial_time
         if waitflag:
+            flag=False
             k = max(2,k-10)
+            
         if ("Squished" in resp):
             # print("Squished")
             flag = False
             fields = resp.split("\n")
+            receivetimelist.append([recvtime, int(fields[0].split()[1])])
             for i in range(4,len(fields)):
                 if (fields[i] == '\x00'):
                     continue
@@ -78,6 +84,7 @@ while (flag and s<=size):
             break
         else:
             fields = resp.split("\n")
+            receivetimelist.append([recvtime, int(fields[0].split()[1])])
             for i in range(3,len(fields)):
                 if (fields[i] == '\x00'):
                     continue
@@ -122,3 +129,11 @@ client.sendto(message.encode(), (SNAME, SPORT))
 msg,addr = client.recvfrom(2048)
 print(msg.decode())
 client.close()
+
+with open("sendtimemain.txt", "w") as f:
+    for i in sendtimelist:
+        f.write(f"[{i[0]},{i[1]}],")
+
+with open("receivetimemain.txt", "w") as f:
+    for i in receivetimelist:
+        f.write(f"[{i[0]},{i[1]}],")
