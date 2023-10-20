@@ -7,14 +7,14 @@ with open("sendtimes.txt", "r") as f:
     sendtimelist = f.readline().split("#")
     sendtimelist.pop()
     for i in range(len(sendtimelist)):
-        time, offset = sendtimelist[i].split("|")
+        offset,time = map(float, sendtimelist[i].split("|"))
         sendtimelist[i] = [time, offset]
 
 with open("receivetimes.txt", "r") as f:
     receivetimelist = f.readline().split("#")
     receivetimelist.pop()
     for i in range(len(receivetimelist)):
-        time, offset = receivetimelist[i].split("|")
+        offset, time = map(float, receivetimelist[i].split("|"))
         receivetimelist[i] = [time, offset]
 
 
