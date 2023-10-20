@@ -3,8 +3,8 @@ import time
 from socket import *
 
 # SNAME = "10.194.49.169"
-# SNAME = "localhost"
-SNAME = gethostbyname("vayu.iitd.ac.in")
+SNAME = "localhost"
+# SNAME = gethostbyname("vayu.iitd.ac.in")
 SPORT=9801
 PSIZE=1448
 
@@ -68,34 +68,39 @@ while (flag and count>0):
     # for i in range(size//PSIZE + 1):
     decrease = False
     sleepflag = False
-    while j<(size//PSIZE + 1):
+    while j<(size//PSIZE + 1) and count>0:
         sleepflag = False
         decrease = False
-        # temp = 0
+        temp = 0
         burstsizelist.append([min(j+k,size//PSIZE + 1)-j, time.time()-initial_time])
-        for i in range(j,min(j+k,size//PSIZE + 1)):
-            # if (temp>k or temp>count):
-            #     break
+        last = 0
+        for i in range(j,size//PSIZE + 1):
+            if (temp>k or temp>=count):
+                break
             if (receivedlist[i]!="#"):
                 continue
-            # temp+=1
+            temp+=1
             sleepflag = True
             s = i*PSIZE
+            last = i
             message = f"Offset: {s}\nNumBytes: {PSIZE}\n\n"
             
             client.sendto(message.encode(),(SNAME,SPORT))
             sendtimelist[s//PSIZE]=(time.time()-initial_time)
-            print("Message sent to server",s,k)
+            print("Message sent to server",s,k,count)
+        j = last
         start = count
-        for i in range(j,min(j+k,size//PSIZE + 1)):
-            if (receivedlist[i]!="#"):
-                continue
+        for i in range(0,min(k,size//PSIZE + 1)):
+            # if (receivedlist[i]!="#"):
+            #     continue
             # s = i*PSIZE
             # message = f"Offset: {s}\nNumBytes: {PSIZE}\n\n"
             # client.sendto(message.encode(),(SNAME,SPORT))
             # print("Message sent to server",s)
             # resp = ""
             received = False
+            if count == 1:
+                print("here 1")
             try:
                 data,addr=client.recvfrom(2048*2048)
                 resp = data.decode()
@@ -104,7 +109,8 @@ while (flag and count>0):
                 received = False
             if received:
                 recv_time=time.time()
-                
+                if count == 1:
+                    print("here 2",count)
                 if ("Squished" in resp):
                     fields = resp.split("\n")
                     ans = ""
@@ -151,13 +157,15 @@ while (flag and count>0):
                 decrease = True
         # time.sleep(0.01)
         # print("received",start-count)
-        j += k
+        # j += k
         if sleepflag :
             time.sleep(0.008)
         # empty = 0
         # for i in range(len(receivedlist)):
         #     if receivedlist[i]=="#":
         #         empty+=1
+        if count == 1:
+            print("here 3")
         if decrease:
             k = max(k//2,1)
         elif start-count>0:
