@@ -29,18 +29,6 @@ def next(s,receivedlist):
 client=socket(AF_INET, SOCK_DGRAM)
 client.settimeout(0.004)
 
-# message="SendSize\nReset\n\n"
-# client.sendto(message.encode(),(SNAME,SPORT))
-
-# wait = True
-# while(wait):
-#     try:
-#         data,addr=client.recvfrom(2048*2048)
-#         wait = False
-#     except:
-#         pass
-# size=int(data.split()[1])
-# print(data.decode())
 
 # Receive the file size
 while(True):
@@ -70,6 +58,7 @@ initial_time=time.time()
 # For plotting
 sendtimelist = [0]*count
 receivetimelist = [0]*count
+burstsizelist=list()
 rtt = [0.004]*count
 
 RTT = 0.004
@@ -83,6 +72,7 @@ while (flag and count>0):
         sleepflag = False
         decrease = False
         # temp = 0
+        burstsizelist.append([min(j+k,size//PSIZE + 1)-j, time.time()-initial_time])
         for i in range(j,min(j+k,size//PSIZE + 1)):
             # if (temp>k or temp>count):
             #     break
@@ -164,10 +154,14 @@ while (flag and count>0):
         j += k
         if sleepflag :
             time.sleep(0.008)
+        # empty = 0
+        # for i in range(len(receivedlist)):
+        #     if receivedlist[i]=="#":
+        #         empty+=1
         if decrease:
             k = max(k//2,1)
         elif start-count>0:
-            k+=1
+            k = min(k+1,count+1)
     
     time.sleep(0.02)
 ans2 = ""
@@ -205,3 +199,7 @@ with open("sendtimes.txt", "w") as f:
 with open("receivetimes.txt", "w") as f:
     for i in range(len(receivetimelist)):
         f.write(f"{i*PSIZE}|{receivetimelist[i]}#")
+
+with open("burstsizes.txt", "w") as f:
+    for i in range(len(burstsizelist)):
+        f.write(f"{burstsizelist[i][1]}|{burstsizelist[i][0]}#")

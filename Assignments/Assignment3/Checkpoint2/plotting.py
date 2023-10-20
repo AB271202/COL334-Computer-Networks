@@ -2,6 +2,7 @@ from matplotlib import pyplot as plt
 
 sendtimelist=[]
 receivetimelist=[]
+burstsizes=[]
 
 with open("sendtimes.txt", "r") as f:
     sendtimelist = f.readline().split("#")
@@ -17,7 +18,13 @@ with open("receivetimes.txt", "r") as f:
         offset, time = map(float, receivetimelist[i].split("|"))
         receivetimelist[i] = [time, offset]
 
-
+with open("burstsizes.txt", "r") as f:
+    burstsizes = f.readline().split("#")
+    burstsizes.pop()
+    for i in range(len(burstsizes)):
+        time, burst = map(float, burstsizes[i].split("|"))
+        burstsizes[i] = [time, burst]
+'''
 # Send times
 x1 = [sendtimelist[i][0] for i in range(len(sendtimelist))]
 y1 = [sendtimelist[i][1] for i in range(len(sendtimelist))]
@@ -63,6 +70,20 @@ plt.scatter(x2, y2, label='Replies', color='orange',
 plt.xlabel("Time (ms)")
 plt.ylabel("Offset")
 plt.title('Zoomed in Sequence-number Trace')
+plt.legend()
+
+plt.show()
+
+plt.close()
+'''
+
+xb=[burstsizes[i][0] for i in range(len(burstsizes))]
+yb=[burstsizes[i][1] for i in range(len(burstsizes))]
+
+plt.plot(xb,yb)
+plt.xlabel("Time (ms)")
+plt.ylabel("Burstsizes")
+plt.title('Burstsizes v/s time')
 plt.legend()
 
 plt.show()
