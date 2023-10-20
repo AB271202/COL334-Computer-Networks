@@ -2,20 +2,45 @@ import hashlib
 import time
 from socket import *
 
-SNAME = "localhost"
-SPORT = 9801
-
-# For plotting
-sendtimelist = []
-receivetimelist = []
-
+# SNAME = "10.194.49.169"
+# SNAME = "localhost"
+SNAME = gethostbyname("vayu.iitd.ac.in")
+SPORT=9801
+PSIZE=1448
 
 
 
-# Initialize client
-client = socket(AF_INET, SOCK_DGRAM)
-client.settimeout(0.05)
 
+def next(s,receivedlist):
+    curr_index = s//PSIZE
+    found = False
+    for i in range(curr_index,len(receivedlist)):
+        if receivedlist[i]=="#":
+            found = True
+            return i*PSIZE
+    if not found:
+        for i in range(0,len(receivedlist)):
+            if receivedlist[i]=="#":
+                found = True
+                return i*PSIZE
+    return 0
+
+
+client=socket(AF_INET, SOCK_DGRAM)
+client.settimeout(0.004)
+
+# message="SendSize\nReset\n\n"
+# client.sendto(message.encode(),(SNAME,SPORT))
+
+# wait = True
+# while(wait):
+#     try:
+#         data,addr=client.recvfrom(2048*2048)
+#         wait = False
+#     except:
+#         pass
+# size=int(data.split()[1])
+# print(data.decode())
 
 # Receive the file size
 while(True):
@@ -24,108 +49,159 @@ while(True):
         client.sendto(message.encode(), (SNAME, SPORT))
         print("SendSize sent to server")
         data, addr = client.recvfrom(2048*2048)
+        break
     except:
         print("[Timeout] Trying again...")
         continue
 
-SIZE = int(data.split()[1])
-print("[SIZE]", SIZE)
+size = int(data.split()[1])
+print("[SIZE]", size)
 
 
-
-offset = 0
+s = 0
 ans = ""
 flag = True
-k = 2
-initial_time = time.time()
-while (flag and offset <= SIZE):
-    for i in range(k):
-        if (offset > SIZE):
-            break
+k = 4
+count = size//PSIZE + 1
+receivedlist = ["#"]*(count)
+remaining = [i for i in range(count)]
+initial_time=time.time()
 
-        message = f"Offset: {offset}\nNumBytes: 1440\n\n"
-        client.sendto(message.encode(), (SNAME, SPORT))
-        sendtimelist.append([time.time()-initial_time, offset])
-        print("Message sent to server", offset)
-        wait = True
-        resp = ""
-        waitflag = False
-        while (wait):
-            # print("back here")
+# For plotting
+sendtimelist = [0]*count
+receivetimelist = [0]*count
+rtt = [0.004]*count
+
+RTT = 0.004
+
+while (flag and count>0):
+    j = 0
+    # for i in range(size//PSIZE + 1):
+    decrease = False
+    sleepflag = False
+    while j<(size//PSIZE + 1):
+        sleepflag = False
+        decrease = False
+        # temp = 0
+        for i in range(j,min(j+k,size//PSIZE + 1)):
+            # if (temp>k or temp>count):
+            #     break
+            if (receivedlist[i]!="#"):
+                continue
+            # temp+=1
+            sleepflag = True
+            s = i*PSIZE
+            message = f"Offset: {s}\nNumBytes: {PSIZE}\n\n"
+            
+            client.sendto(message.encode(),(SNAME,SPORT))
+            sendtimelist[s//PSIZE]=(time.time()-initial_time)
+            print("Message sent to server",s,k)
+        start = count
+        for i in range(j,min(j+k,size//PSIZE + 1)):
+            if (receivedlist[i]!="#"):
+                continue
+            # s = i*PSIZE
+            # message = f"Offset: {s}\nNumBytes: {PSIZE}\n\n"
+            # client.sendto(message.encode(),(SNAME,SPORT))
+            # print("Message sent to server",s)
+            # resp = ""
+            received = False
             try:
-                # print("going here")
-                wait = False
-                data, addr = client.recvfrom(2048*2048)
+                data,addr=client.recvfrom(2048*2048)
                 resp = data.decode()
-                # print("recv")
+                received = True
             except:
-                wait = True
-                waitflag = True
-                client.sendto(message.encode(), (SNAME, SPORT))
-                # print("wait")
-        # print(resp)
-        recvtime = time.time()-initial_time
-        if waitflag:
-            flag = False
-            k = max(2, k-10)
-
-        if ("Squished" in resp):
-            # print("Squished")
-            flag = False
-            fields = resp.split("\n")
-            receivetimelist.append([recvtime, int(fields[0].split()[1])])
-            for i in range(4, len(fields)):
-                if (fields[i] == '\x00'):
-                    continue
-                if (i == len(fields)-1):
-                    ans += fields[i]
+                received = False
+            if received:
+                recv_time=time.time()
+                
+                if ("Squished" in resp):
+                    fields = resp.split("\n")
+                    ans = ""
+                    if (fields[0].split())[0]=="Size:":
+                        continue
+                    for i in range(4,len(fields)):
+                        if (fields[i] == '\x00'):
+                            continue
+                        if (i==len(fields)-1):
+                            ans+=fields[i]
+                        else:
+                            ans+=fields[i]+"\n"
+                    offset = fields[0]
+                    offsetnum = int(offset.split()[1])
+                    # if receivedlist[offsetnum//PSIZE] == "#":
+                    #     receivetimelist[offsetnum//PSIZE]=recv_time-initial_time
+                    #     count-=1
+                    # receivedlist[offsetnum//PSIZE]=ans
+                    # decrease = True
                 else:
-                    ans += fields[i]+"\n"
-            if (offset > SIZE):
-                flag = False
-                break
-            offset += 1440
-            break
-        else:
-            fields = resp.split("\n")
-            receivetimelist.append([recvtime, int(fields[0].split()[1])])
-            for i in range(3, len(fields)):
-                if (fields[i] == '\x00'):
-                    continue
-                if (i == len(fields)-1):
-                    ans += fields[i]
-                else:
-                    ans += fields[i]+"\n"
-            if (offset > SIZE):
-                flag = False
-                break
-            offset += 1440
-    time.sleep(0.01)
-    if flag:
-        k += 1
-    else:
-        # break
-        if (offset > SIZE):
-            break
-        # k = max(2,k-10)
-        flag = True
-
-
-
+                    ans = ""
+                    fields = resp.split("\n")
+                    if (fields[0].split())[0]=="Size:":
+                        continue
+                    for i in range(3,len(fields)):
+                        if (fields[i] == '\x00'):
+                            continue
+                        if (i==len(fields)-1):
+                            ans+=fields[i]
+                        else:
+                            ans+=fields[i]+"\n"
+                    offset = fields[0]
+                    offsetnum = int(offset.split()[1])
+                # if (count%3 == 0):
+                #     time.sleep(0.02)
+                if receivedlist[offsetnum//PSIZE] == "#":
+                    receivetimelist[offsetnum//PSIZE]=recv_time-initial_time
+                    count-=1
+                    rtt[offsetnum//PSIZE] = receivetimelist[offsetnum//PSIZE]-sendtimelist[offsetnum//PSIZE]
+                    # client.settimeout(sum(rtt)/(size//PSIZE + 1)*0.5+0.004)
+                    # client.settimeout(RTT*0.875+rtt[offsetnum//PSIZE]*0.125)
+                receivedlist[offsetnum//PSIZE]=ans
+            else:
+                decrease = True
+        # time.sleep(0.01)
+        # print("received",start-count)
+        j += k
+        if sleepflag :
+            time.sleep(0.008)
+        if decrease:
+            k = max(k//2,1)
+        elif start-count>0:
+            k+=1
+    
+    time.sleep(0.02)
+ans2 = ""
+ans2 = ans
+ans  = ""
+for i in range(size//PSIZE+1):
+    ans+=receivedlist[i]
 
 md5_hex = hashlib.md5(ans.encode('utf-8')).hexdigest()
 print("MD5 Hash of the file:", md5_hex)
 message = f"Submit: 2021CS10134@teamname\nMD5: {md5_hex}\n\n"
 client.sendto(message.encode(), (SNAME, SPORT))
 
-msg, addr = client.recvfrom(2048)
+
+msg1 = ""
+while(not ("Result" in msg1 )):
+    wait = True
+    while(wait):
+        try:
+            msg,addr=client.recvfrom(2048*2048)
+            wait = False
+        except:
+            # pass
+            client.sendto(message.encode(), (SNAME, SPORT))
+    msg1 = msg.decode()
+
 print(msg.decode())
 client.close()
+# print(rtt)
 
-# with open("sendtimes.txt", "w") as f:
-#     for i in sendtimelist:
-#         f.write(f"{i[0]}|{i[1]}#")
+with open("sendtimes.txt", "w") as f:
+    for i in range(len(sendtimelist)):
+        f.write(f"{i*PSIZE}|{sendtimelist[i]}#")
 
-# with open("receivetimes.txt", "w") as f:
-#     for i in receivetimelist:
-#         f.write(f"{i[0]}|{i[1]}#")
+with open("receivetimes.txt", "w") as f:
+    for i in range(len(receivetimelist)):
+        f.write(f"{i*PSIZE}|{receivetimelist[i]}#")
