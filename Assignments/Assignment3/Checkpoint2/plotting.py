@@ -1,9 +1,5 @@
 from matplotlib import pyplot as plt
 
-sendtimelist=[]
-receivetimelist=[]
-burstsizes=[]
-
 with open("sendtimes.txt", "r") as f:
     sendtimelist = f.readline().split("#")
     sendtimelist.pop()
@@ -24,6 +20,13 @@ with open("burstsizes.txt", "r") as f:
     for i in range(len(burstsizes)):
         time, burst = map(float, burstsizes[i].split("|"))
         burstsizes[i] = [time, burst]
+
+with open("squished.txt", "r") as f:
+    squished = f.readline().split("#")
+    squished.pop()
+    for i in range(len(squished)):
+        time, burst = map(float, squished[i].split("|"))
+        squished[i] = [time, burst]
 '''
 # Send times
 x1 = [sendtimelist[i][0] for i in range(len(sendtimelist))]
@@ -75,15 +78,30 @@ plt.legend()
 plt.show()
 
 plt.close()
-'''
 
+# Burstsizes
 xb=[burstsizes[i][0] for i in range(len(burstsizes))]
 yb=[burstsizes[i][1] for i in range(len(burstsizes))]
 
 plt.plot(xb,yb)
-plt.xlabel("Time (ms)")
+plt.xlabel("Time (s)")
 plt.ylabel("Burstsizes")
 plt.title('Burstsizes v/s time')
+plt.legend()
+
+plt.show()
+
+plt.close()
+'''
+
+# Squished
+xs=[squished[i][0] for i in range(len(squished))]
+ys=[squished[i][1] for i in range(len(squished))]
+
+plt.plot(xs,ys)
+plt.xlabel("Time (s)")
+plt.ylabel("Squished (0/1)")
+plt.title('Squished v/s time')
 plt.legend()
 
 plt.show()

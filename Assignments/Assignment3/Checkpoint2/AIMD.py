@@ -43,6 +43,7 @@ initial_time = time.time()
 sendtimelist = [0]*count
 receivetimelist = [0]*count
 burstsizelist = list()
+squishedlist=list()
 
 rtt = [0.004]*count
 RTT = 0.004
@@ -56,8 +57,7 @@ while (flag and count > 0):
         decrease = False
 
         # Sending a burst
-        burstsizelist.append(
-            [min(j+k, size//PSIZE + 1)-j, time.time()-initial_time])
+        burstsizelist.append([min(j+k, size//PSIZE + 1)-j, time.time()-initial_time])
         for i in range(j, min(j+k, size//PSIZE + 1)):
 
             if (receivedlist[i] != "#"):
@@ -92,8 +92,16 @@ while (flag and count > 0):
                 ans = ""
                 if (fields[0].split())[0] == "Size:":
                     continue
-                    
-                for i in range(4 if ("Squished" == fields[2]) else 3 , len(fields)):
+                '''
+                Offset: [offset]\n 
+                NumBytes: [number of bytes]\n 
+                Squished\n 
+                \n 
+                NUMBYTES OF DATA 
+                '''
+                decrease=("Squished" == fields[2])
+                squishedlist.append([int(decrease), time.time()-initial_time])
+                for i in range(4 if decrease else 3 , len(fields)):
                     if (fields[i] == '\x00'):
                         continue
                     if (i == len(fields)-1):
@@ -106,8 +114,7 @@ while (flag and count > 0):
                 if receivedlist[offset//PSIZE] == "#":
                     receivetimelist[offset//PSIZE] = recv_time-initial_time
                     count -= 1
-                    rtt[offset//PSIZE] = receivetimelist[offset//PSIZE] - \
-                        sendtimelist[offset//PSIZE]
+                    rtt[offset//PSIZE] = receivetimelist[offset//PSIZE] - sendtimelist[offset//PSIZE]
                 receivedlist[offset//PSIZE] = ans
             else:
                 decrease = True
@@ -115,7 +122,6 @@ while (flag and count > 0):
         j += k
         if sleepflag:
             time.sleep(0.008)
-
         if decrease:
             k = max(k//2, 1)
         elif start-count > 0:
@@ -159,3 +165,7 @@ with open("receivetimes.txt", "w") as f:
 with open("burstsizes.txt", "w") as f:
     for i in range(len(burstsizelist)):
         f.write(f"{burstsizelist[i][1]}|{burstsizelist[i][0]}#")
+
+with open("squished.txt", "w") as f:
+    for i in range(len(squishedlist)):
+        f.write(f"{squishedlist[i][1]}|{squishedlist[i][0]}#")
