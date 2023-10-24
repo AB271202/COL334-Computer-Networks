@@ -29,18 +29,6 @@ def next(s,receivedlist):
 client=socket(AF_INET, SOCK_DGRAM)
 client.settimeout(0.004)
 
-# message="SendSize\nReset\n\n"
-# client.sendto(message.encode(),(SNAME,SPORT))
-
-# wait = True
-# while(wait):
-#     try:
-#         data,addr=client.recvfrom(2048*2048)
-#         wait = False
-#     except:
-#         pass
-# size=int(data.split()[1])
-# print(data.decode())
 
 # Receive the file size
 while(True):
@@ -101,11 +89,6 @@ while (flag and count>0):
         for i in range(j,min(j+k,size//PSIZE + 1)):
             if (receivedlist[i]!="#"):
                 continue
-            # s = i*PSIZE
-            # message = f"Offset: {s}\nNumBytes: {PSIZE}\n\n"
-            # client.sendto(message.encode(),(SNAME,SPORT))
-            # print("Message sent to server",s)
-            # resp = ""
             received = False
             try:
                 data,addr=client.recvfrom(2048*2048)
@@ -130,11 +113,6 @@ while (flag and count>0):
                             ans+=fields[i]+"\n"
                     offset = fields[0]
                     offsetnum = int(offset.split()[1])
-                    # if receivedlist[offsetnum//PSIZE] == "#":
-                    #     receivetimelist[offsetnum//PSIZE]=recv_time-initial_time
-                    #     count-=1
-                    # receivedlist[offsetnum//PSIZE]=ans
-                    # decrease = True
                 else:
                     ans = ""
                     fields = resp.split("\n")
@@ -202,10 +180,10 @@ print(msg.decode())
 client.close()
 # print(rtt)
 
-with open("sendtimes.txt", "w") as f:
-    for i in range(len(sendtimelist)):
-        f.write(f"{i*PSIZE}|{sendtimelist[i]}#")
+# with open("sendtimes.txt", "w") as f:
+#     for i in range(len(sendtimelist)):
+#         f.write(f"{i*PSIZE}|{sendtimelist[i]}#")
 
-with open("receivetimes.txt", "w") as f:
-    for i in range(len(receivetimelist)):
-        f.write(f"{i*PSIZE}|{receivetimelist[i]}#")
+# with open("receivetimes.txt", "w") as f:
+#     for i in range(len(receivetimelist)):
+#         f.write(f"{i*PSIZE}|{receivetimelist[i]}#")

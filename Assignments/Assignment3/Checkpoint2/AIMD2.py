@@ -200,14 +200,14 @@ print(msg.decode())
 client.close()
 # print(rtt)
 
-with open("sendtimes.txt", "w") as f:
-    for i in range(len(sendtimelist)):
-        f.write(f"{i*PSIZE}|{sendtimelist[i]}#")
+# with open("sendtimes.txt", "w") as f:
+#     for i in range(len(sendtimelist)):
+#         f.write(f"{i*PSIZE}|{sendtimelist[i]}#")
 
-with open("receivetimes.txt", "w") as f:
-    for i in range(len(receivetimelist)):
-        f.write(f"{i*PSIZE}|{receivetimelist[i]}#")
+# with open("receivetimes.txt", "w") as f:
+#     for i in range(len(receivetimelist)):
+#         f.write(f"{i*PSIZE}|{receivetimelist[i]}#")
 
-with open("burstsizes.txt", "w") as f:
-    for i in range(len(burstsizelist)):
-        f.write(f"{burstsizelist[i][1]}|{burstsizelist[i][0]}#")
+# with open("burstsizes.txt", "w") as f:
+#     for i in range(len(burstsizelist)):
+#         f.write(f"{burstsizelist[i][1]}|{burstsizelist[i][0]}#")
