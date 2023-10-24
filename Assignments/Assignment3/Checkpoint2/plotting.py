@@ -97,8 +97,8 @@ plt.close()
 # Squished
 xs=[squished[i][0] for i in range(len(squished))]
 ys=[squished[i][1] for i in range(len(squished))]
-
 plt.plot(xs,ys)
+# plt.plot(xs[len(squished)//2:3*len(squished)//4],ys[len(squished)//2:3*len(squished)//4], marker="o")
 plt.xlabel("Time (s)")
 plt.ylabel("Squished (0/1)")
 plt.title('Squished v/s time')
