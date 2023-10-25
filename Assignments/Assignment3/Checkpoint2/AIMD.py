@@ -125,7 +125,7 @@ while (flag and count > 0):
         if decrease:
             k = max(k//2, 1)
         elif start-count > 0:
-            k = min(k+1, count+1)
+            k = min(k+1, count+1,10)
 
     time.sleep(0.02)
 

@@ -2,9 +2,9 @@ import hashlib
 import time
 from socket import *
 
-# SNAME = "10.194.49.169"
+SNAME = "10.17.7.134"
 # SNAME = "localhost"
-SNAME = gethostbyname("vayu.iitd.ac.in")
+# SNAME = gethostbyname("vayu.iitd.ac.in")
 SPORT = 9801
 PSIZE = 1448
 
@@ -59,20 +59,20 @@ while (flag and count > 0):
         decrease = False
 
         # Sending a burst
-        burstsizelist.append([min(j+k, size//PSIZE + 1)-j, time.time()-initial_time])
+        burst=0
         for i in range(j, min(j+k, size//PSIZE + 1)):
 
             if (receivedlist[i] != "#"):
                 continue
-
             sleepflag = True
             s = i*PSIZE
             message = f"Offset: {s}\nNumBytes: {PSIZE}\n\n"
 
             client.sendto(message.encode(), (SNAME, SPORT))
+            burst+=1
             sendtimelist[s//PSIZE] = (time.time()-initial_time)
-            print("Message sent to server", s, k)
-
+            print("Requested [Offset]", s, "\t [Burst Size]", k)
+        burstsizelist.append([burst, time.time()-initial_time])
         start = count
 
         # Receiving Response
@@ -101,10 +101,10 @@ while (flag and count > 0):
                 \n 
                 NUMBYTES OF DATA 
                 '''
-                decrease=("Squished" == fields[2])
+                decrease = decrease or ("Squished" == fields[2])
                 sq_count+=int("Squished" == fields[2])
-                squishedlist.append([int(decrease), time.time()-initial_time])
-                for i in range(4 if decrease else 3 , len(fields)):
+                squishedlist.append([int("Squished" == fields[2]), time.time()-initial_time])
+                for i in range(4 if "Squished" == fields[2] else 3 , len(fields)):
                     if (fields[i] == '\x00'):
                         continue
                     if (i == len(fields)-1):
@@ -128,14 +128,14 @@ while (flag and count > 0):
             time.sleep(sleeptime)
         if decrease:
             if k<=1:
-                sleeptime = min(0.02,sleeptime+0.003)
-            dec_count+=max(1,k-start+count)
+                sleeptime = min(0.02,sleeptime+0.003) # Increase sleeptime if burst size at 1
+            dec_count += max(1,k-start+count) # This tells us how many we expected but didn't get
             k = max(k//2, 1)
             k1 = k
         elif start-count > 0:
             # sleeptime = max(0.008,sleeptime-0.001)
             # k = min(k+1, count+1)
-            if dec_count>int(60000*RTT) or sq_count>0:
+            if dec_count>int(1000*RTT) or sq_count>0:
                 sleeptime = max(0.01,sleeptime-0.001)
                 k1 = k1+(1/k1)
             # k+=1

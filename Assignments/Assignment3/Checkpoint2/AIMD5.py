@@ -2,46 +2,19 @@ import hashlib
 import time
 from socket import *
 
-# SNAME = "10.194.49.169"
-SNAME = "localhost"
-SNAME = gethostbyname("vayu.iitd.ac.in")
+SNAME = "10.17.7.134"
+# SNAME = "localhost"
+# SNAME = gethostbyname("vayu.iitd.ac.in")
 # SNAME = "10.17.7.218"
 SPORT=9801
 PSIZE=1448
 
 
 
-
-def next(s,receivedlist):
-    curr_index = s//PSIZE
-    found = False
-    for i in range(curr_index,len(receivedlist)):
-        if receivedlist[i]=="#":
-            found = True
-            return i*PSIZE
-    if not found:
-        for i in range(0,len(receivedlist)):
-            if receivedlist[i]=="#":
-                found = True
-                return i*PSIZE
-    return 0
-
-
 client=socket(AF_INET, SOCK_DGRAM)
 client.settimeout(0.004)
 
-# message="SendSize\nReset\n\n"
-# client.sendto(message.encode(),(SNAME,SPORT))
 
-# wait = True
-# while(wait):
-#     try:
-#         data,addr=client.recvfrom(2048*2048)
-#         wait = False
-#     except:
-#         pass
-# size=int(data.split()[1])
-# print(data.decode())
 
 # Receive the file size
 while(True):
