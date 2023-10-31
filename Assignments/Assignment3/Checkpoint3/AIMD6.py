@@ -10,13 +10,13 @@ from socket import *
 10.17.6.5
 '''
 
-SNAME = "localhost"
+SNAME = "10.17.7.218"
 SPORT = 9802
 PSIZE = 1448
 
 
 client = socket(AF_INET, SOCK_DGRAM)
-client.settimeout(0.004)
+client.settimeout(0.008)
 dec_count = 0
 
 # Receive the file size
@@ -82,7 +82,7 @@ while (flag and count > 0):
 
             client.sendto(message.encode(), (SNAME, SPORT))
             burst+=1
-            sendtimelist[s//PSIZE] = (time.time()-initial_time)
+            sendtimelist.append([s,time.time()-initial_time])
             print("Requested [Offset]", s, "\t [Burst Size]", k)
         burstsizelist.append([burst, time.time()-initial_time])
         start = count
@@ -186,7 +186,7 @@ print(decreasecount)
 
 with open("sendtimes.txt", "w") as f:
     for i in range(len(sendtimelist)):
-        f.write(f"{i*PSIZE}|{sendtimelist[i]}#")
+        f.write(f"{sendtimelist[i][0]}|{sendtimelist[i][1]}#")
 
 with open("receivetimes.txt", "w") as f:
     for i in range(len(receivetimelist)):
