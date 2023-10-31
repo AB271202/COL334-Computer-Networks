@@ -27,7 +27,7 @@ with open("squished.txt", "r") as f:
     for i in range(len(squished)):
         time, burst = map(float, squished[i].split("|"))
         squished[i] = [time, burst]
-'''
+
 # Send times
 x1 = [sendtimelist[i][0] for i in range(len(sendtimelist))]
 y1 = [sendtimelist[i][1] for i in range(len(sendtimelist))]
@@ -92,7 +92,7 @@ plt.legend()
 plt.show()
 
 plt.close()
-'''
+
 
 # Squished
 xs=[squished[i][0] for i in range(len(squished))]

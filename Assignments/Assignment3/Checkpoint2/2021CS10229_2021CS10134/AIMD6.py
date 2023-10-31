@@ -2,10 +2,16 @@ import hashlib
 import time
 from socket import *
 
-SNAME = "10.17.7.134"
-# SNAME = "localhost"
-# SNAME = gethostbyname("vayu.iitd.ac.in")
-SPORT = 9801
+
+'''
+10.17.7.218
+10.17.7.134
+10.17.51.115
+10.17.6.5
+'''
+
+SNAME = "10.17.7.218"
+SPORT = 9802
 PSIZE = 1448
 
 
@@ -16,7 +22,9 @@ dec_count = 0
 # Receive the file size
 timeout = 0.004
 sleeptime = 0.008
-while (True):
+
+tries=0
+while (tries<10):
     try:
         message = "SendSize\nReset\n\n"
         client.sendto(message.encode(), (SNAME, SPORT))
@@ -27,7 +35,10 @@ while (True):
         print("[Timeout] Trying again...")
         timeout += 0.001
         client.settimeout(timeout)
+        tries+=1
         continue
+if tries==10:
+    raise Exception("Server not reachable")
 
 size = int(data.split()[1])
 print("[SIZE]", size)
@@ -45,11 +56,12 @@ sendtimelist = [0]*count
 receivetimelist = [0]*count
 burstsizelist = list()
 squishedlist=list()
+
 sq_count = 0
 rtt = [0.004]*count
 RTT = 0.004
 k1 = 4.0
-
+decreasecount=0
 while (flag and count > 0):
     j = 0
     decrease = False
@@ -122,6 +134,7 @@ while (flag and count > 0):
                 receivedlist[offset//PSIZE] = ans
             else:
                 decrease = True
+                decreasecount+=1
 
         j += k
         if sleepflag:
@@ -169,7 +182,7 @@ while (not ("Result" in msg1)):
 
 print(msg.decode())
 client.close()
-# print(rtt)
+print(decreasecount)
 
 with open("sendtimes.txt", "w") as f:
     for i in range(len(sendtimelist)):
