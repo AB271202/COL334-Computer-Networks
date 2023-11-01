@@ -2,22 +2,29 @@ import hashlib
 import time
 from socket import *
 
-# SNAME = "10.194.49.169"
-# SNAME = "localhost"
-SNAME = gethostbyname("vayu.iitd.ac.in")
-SNAME = "10.17.7.218"
+
+'''
+10.17.7.218
+10.17.7.134
+10.17.51.115
+10.17.6.5
+'''
+
+SNAME = "vayu.iitd.ac.in"
 SPORT = 9802
 PSIZE = 1448
 
 
 client = socket(AF_INET, SOCK_DGRAM)
-client.settimeout(0.01)
+client.settimeout(0.008)
 dec_count = 0
 
 # Receive the file size
-timeout = 0.01
+timeout = 0.004
 sleeptime = 0.008
-while (True):
+
+tries=0
+while (tries<20):
     try:
         message = "SendSize\nReset\n\n"
         client.sendto(message.encode(), (SNAME, SPORT))
@@ -28,7 +35,29 @@ while (True):
         print("[Timeout] Trying again...")
         timeout += 0.001
         client.settimeout(timeout)
+        tries+=1
         continue
+if tries==20:
+    raise Exception("Server not reachable")
+rtt=[]
+for _ in range(10):
+    meas_time=time.time()
+    while (tries<20):
+        try:
+            message = "SendSize\nReset\n\n"
+            client.sendto(message.encode(), (SNAME, SPORT))
+            print("SendSize sent to server")
+            rtt.append(time.time()-meas_time)
+            data, addr = client.recvfrom(2048*2048)
+            break
+        except:
+            print("[Timeout] Trying again...")
+            tries+=1
+            continue
+
+avdrtt = sum(rtt)/len(rtt)
+client.settimeout(avdrtt+0.003)
+
 
 size = int(data.split()[1])
 print("[SIZE]", size)
@@ -46,52 +75,52 @@ sendtimelist = []
 receivetimelist = [0]*count
 burstsizelist = list()
 squishedlist=list()
+
 sq_count = 0
 rtt = [0.004]*count
 RTT = 0.004
 k1 = 4.0
-start = 0
-end = 10
-rate = 0.01
-s = start*PSIZE
-# message = f"Offset: {s}\nNumBytes: {PSIZE}\n\nOffset: {s+1}\nNumBytes: {PSIZE}\n\nOffset: {s+2}\nNumBytes: {PSIZE}\n\nOffset: {s+3}\nNumBytes: {PSIZE}\n\n"
-# client.sendto(message.encode(), (SNAME, SPORT))
-for i in range(end):
-    message = f"Offset: {i*PSIZE}\nNumBytes: {PSIZE}\n\n"
-    client.sendto(message.encode(), (SNAME, SPORT))
-    sendtimelist.append([i*PSIZE, time.time()-initial_time])
-    time.sleep(0.01)
-rates = [0.01]
+decreasecount=0
 while (flag and count > 0):
     j = 0
     decrease = False
     sleepflag = False
-    while end <= (size//PSIZE + 1) and start < (size//PSIZE + 1):
-        print(start*PSIZE,end,size//PSIZE + 1,size)
-        if receivedlist[start]!="#":
-            start += 1
-            continue
+    while j < (size//PSIZE + 1):
         sleepflag = False
         decrease = False
 
         # Sending a burst
-        burstsizelist.append([min(j+k, size//PSIZE + 1)-j, time.time()-initial_time])
-        wait = True
-        init_time = -1
-        count = 0
-        while wait:
-            print("waiting for start")
+        burst=0
+        for i in range(j, min(j+k, size//PSIZE + 1)):
+
+            if (receivedlist[i] != "#"):
+                continue
+            sleepflag = True
+            s = i*PSIZE
+            message = f"Offset: {s}\nNumBytes: {PSIZE}\n\n"
+
+            client.sendto(message.encode(), (SNAME, SPORT))
+            burst+=1
+            sendtimelist.append([s,time.time()-initial_time])
+            print("Requested [Offset]", s, "\t [Burst Size]", k)
+        burstsizelist.append([burst, time.time()-initial_time])
+        start = count
+
+        # Receiving Response
+        for i in range(j, min(j+k, size//PSIZE + 1)):
+            if (receivedlist[i] != "#"):
+                continue
+
+            received = False
             try:
-                # s = start*PSIZE
-                # message = f"Offset: {s}\nNumBytes: {PSIZE}\n\n"
-                # client.sendto(message.encode(), (SNAME, SPORT))
                 data, addr = client.recvfrom(2048*2048)
-                # print("something received")
                 resp = data.decode()
+                received = True
+            except:
+                received = False
+            
+            if received:
                 recv_time = time.time()
-                if init_time != -1:
-                    rate = recv_time-init_time
-                    rates.append(rate)
                 fields = resp.split("\n")
                 ans = ""
                 if (fields[0].split())[0] == "Size:":
@@ -103,49 +132,53 @@ while (flag and count > 0):
                 \n 
                 NUMBYTES OF DATA 
                 '''
-                decrease=decrease or ("Squished" == fields[2])
+                decrease = decrease or ("Squished" == fields[2])
                 sq_count+=int("Squished" == fields[2])
-                squishedlist.append([int(("Squished" == fields[2])), time.time()-initial_time])
-                # print("start to process")
-                for i in range(4 if ("Squished" == fields[2]) else 3 , len(fields)):
+                squishedlist.append([int("Squished" == fields[2]), time.time()-initial_time])
+                for i in range(4 if "Squished" == fields[2] else 3 , len(fields)):
                     if (fields[i] == '\x00'):
                         continue
                     if (i == len(fields)-1):
                         ans += fields[i]
                     else:
                         ans += fields[i]+"\n"
-                # print("done processing")
+
                 offset = int(fields[0].split()[1])
 
                 if receivedlist[offset//PSIZE] == "#":
                     receivetimelist[offset//PSIZE] = recv_time-initial_time
                     count -= 1
-                    rtt[offset//PSIZE] = receivetimelist[offset//PSIZE] - sendtimelist[offset//PSIZE][1]
-                    RTT = RTT*0.875+rtt[offset//PSIZE]*0.125
-                    # client.settimeout(0.01*RTT)
+                    # rtt[offset//PSIZE] = receivetimelist[offset//PSIZE] - sendtimelist[offset//PSIZE]
+                    RTT = RTT*0.125+rtt[offset//PSIZE]*0.875
                 receivedlist[offset//PSIZE] = ans
-                if (offset//PSIZE == start):
-                    start += 1
-                    wait = False
-                    sleeptime=min(0.01,sleeptime+0.001)
-                # print("finished this")
-            except:
-                init_time = time.time()
-                count += 1
-                if count >= 3:
-                    s = start*PSIZE
-                    message = f"Offset: {s}\nNumBytes: {PSIZE}\n\n"
-                    # time.sleep(0.004)
-                    client.sendto(message.encode(), (SNAME, SPORT))
-                    print("Message sent to server", s)
-                wait = True
-        if (end<(size//PSIZE + 1)):
-            s = end*PSIZE
-            message = f"Offset: {s}\nNumBytes: {PSIZE}\n\n"
-            # time.sleep(sleeptime)
-            client.sendto(message.encode(), (SNAME, SPORT))
-            end+=1
-        # time.sleep(max(0.001,max(rates)))
+            else:
+                decrease = True
+                decreasecount+=1
+
+        j += k
+        if sleepflag:
+            time.sleep(sleeptime)
+        if decrease:
+            if k<=1:
+                sleeptime = min(0.02,sleeptime+0.003) # Increase sleeptime if burst size at 1
+            dec_count += max(1,k-start+count) # This tells us how many we expected but didn't get
+            k = max(k//2, 1)
+            k1 = k
+        elif start-count > 0:
+            # sleeptime = max(0.008,sleeptime-0.001)
+            # k = min(k+1, count+1)
+            if dec_count>int(2000*RTT) or sq_count>0:
+                sleeptime = max(0.01,sleeptime-0.001)
+                k1 = k1+(1/k1)
+                # k1+=1
+            # k+=1
+            else:
+                sleeptime = max(0.006,sleeptime-0.001)
+                k1 = k1+1
+            k = int(k1)
+
+    time.sleep(0.02)
+
 ans = ""
 for i in range(size//PSIZE+1):
     ans += receivedlist[i]
@@ -169,7 +202,7 @@ while (not ("Result" in msg1)):
 
 print(msg.decode())
 client.close()
-# print(rtt)
+print(decreasecount)
 
 with open("sendtimes.txt", "w") as f:
     for i in range(len(sendtimelist)):
@@ -186,5 +219,3 @@ with open("burstsizes.txt", "w") as f:
 with open("squished.txt", "w") as f:
     for i in range(len(squishedlist)):
         f.write(f"{squishedlist[i][1]}|{squishedlist[i][0]}#")
-
-# print(rates)
