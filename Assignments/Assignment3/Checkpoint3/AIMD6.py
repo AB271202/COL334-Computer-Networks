@@ -10,7 +10,7 @@ from socket import *
 10.17.6.5
 '''
 
-SNAME = "10.17.7.218"
+SNAME = "vayu.iitd.ac.in"
 SPORT = 9802
 PSIZE = 1448
 
@@ -37,8 +37,27 @@ while (tries<20):
         client.settimeout(timeout)
         tries+=1
         continue
-if tries==10:
+if tries==20:
     raise Exception("Server not reachable")
+rtt=[]
+for _ in range(10):
+    meas_time=time.time()
+    while (tries<20):
+        try:
+            message = "SendSize\nReset\n\n"
+            client.sendto(message.encode(), (SNAME, SPORT))
+            print("SendSize sent to server")
+            rtt.append(time.time()-meas_time)
+            data, addr = client.recvfrom(2048*2048)
+            break
+        except:
+            print("[Timeout] Trying again...")
+            tries+=1
+            continue
+
+avdrtt = sum(rtt)/len(rtt)
+client.settimeout(avdrtt+0.003)
+
 
 size = int(data.split()[1])
 print("[SIZE]", size)
@@ -52,7 +71,7 @@ remaining = [i for i in range(count)]
 
 # For plotting
 initial_time = time.time()
-sendtimelist = [0]*count
+sendtimelist = []
 receivetimelist = [0]*count
 burstsizelist = list()
 squishedlist=list()
@@ -129,7 +148,7 @@ while (flag and count > 0):
                 if receivedlist[offset//PSIZE] == "#":
                     receivetimelist[offset//PSIZE] = recv_time-initial_time
                     count -= 1
-                    rtt[offset//PSIZE] = receivetimelist[offset//PSIZE] - sendtimelist[offset//PSIZE]
+                    # rtt[offset//PSIZE] = receivetimelist[offset//PSIZE] - sendtimelist[offset//PSIZE]
                     RTT = RTT*0.125+rtt[offset//PSIZE]*0.875
                 receivedlist[offset//PSIZE] = ans
             else:
@@ -148,9 +167,10 @@ while (flag and count > 0):
         elif start-count > 0:
             # sleeptime = max(0.008,sleeptime-0.001)
             # k = min(k+1, count+1)
-            if dec_count>int(1000*RTT) or sq_count>0:
+            if dec_count>int(2000*RTT) or sq_count>0:
                 sleeptime = max(0.01,sleeptime-0.001)
                 k1 = k1+(1/k1)
+                # k1+=1
             # k+=1
             else:
                 sleeptime = max(0.006,sleeptime-0.001)

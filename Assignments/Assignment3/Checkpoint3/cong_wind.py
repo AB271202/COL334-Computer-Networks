@@ -5,7 +5,7 @@ from socket import *
 # SNAME = "10.194.49.169"
 # SNAME = "localhost"
 SNAME = gethostbyname("vayu.iitd.ac.in")
-# SNAME = "10.17.7.218"
+SNAME = "10.17.7.218"
 SPORT = 9802
 PSIZE = 1448
 
@@ -42,7 +42,7 @@ remaining = [i for i in range(count)]
 
 # For plotting
 initial_time = time.time()
-sendtimelist = [0]*count
+sendtimelist = []
 receivetimelist = [0]*count
 burstsizelist = list()
 squishedlist=list()
@@ -59,6 +59,7 @@ s = start*PSIZE
 for i in range(end):
     message = f"Offset: {i*PSIZE}\nNumBytes: {PSIZE}\n\n"
     client.sendto(message.encode(), (SNAME, SPORT))
+    sendtimelist.append([i*PSIZE, time.time()-initial_time])
     time.sleep(0.01)
 rates = [0.01]
 while (flag and count > 0):
@@ -119,7 +120,7 @@ while (flag and count > 0):
                 if receivedlist[offset//PSIZE] == "#":
                     receivetimelist[offset//PSIZE] = recv_time-initial_time
                     count -= 1
-                    rtt[offset//PSIZE] = receivetimelist[offset//PSIZE] - sendtimelist[offset//PSIZE]
+                    rtt[offset//PSIZE] = receivetimelist[offset//PSIZE] - sendtimelist[offset//PSIZE][1]
                     RTT = RTT*0.875+rtt[offset//PSIZE]*0.125
                     # client.settimeout(0.01*RTT)
                 receivedlist[offset//PSIZE] = ans
@@ -172,7 +173,7 @@ client.close()
 
 with open("sendtimes.txt", "w") as f:
     for i in range(len(sendtimelist)):
-        f.write(f"{i*PSIZE}|{sendtimelist[i]}#")
+        f.write(f"{sendtimelist[i][0]}|{sendtimelist[i][1]}#")
 
 with open("receivetimes.txt", "w") as f:
     for i in range(len(receivetimelist)):
