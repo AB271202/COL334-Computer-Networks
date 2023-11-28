@@ -1,6 +1,6 @@
 # COL334
 
-The course repository for the course COL334: Computer Networks
+The repository for the course COL334: Computer Networks
 
 Professor: [Aaditeshwar Seth](https://www.cse.iitd.ac.in/~aseth/) 
 
