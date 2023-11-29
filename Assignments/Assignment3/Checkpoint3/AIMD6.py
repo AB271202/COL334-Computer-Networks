@@ -10,7 +10,7 @@ from socket import *
 10.17.6.5
 '''
 
-SNAME = "vayu.iitd.ac.in"
+SNAME = "localhost"
 SPORT = 9802
 PSIZE = 1448
 

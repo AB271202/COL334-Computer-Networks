@@ -10,8 +10,8 @@ from socket import *
 10.17.6.5
 '''
 
-SNAME = "10.17.7.218"
-SPORT = 9802
+SNAME = "localhost"
+SPORT = 9801
 PSIZE = 1448
 
 
